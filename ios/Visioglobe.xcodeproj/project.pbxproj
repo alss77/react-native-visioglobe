@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		5E555C0D2413F4C50049A1A2 /* Visioglobe.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Visioglobe.m */; };
-		F4FF95D7245B92E800C19C63 /*  Visioglobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  Visioglobe.swift */; };
-
+		2A38E3242A565112007A74B0 /* Visioglobe.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Visioglobe.m */; };
+		2A6329522A532A3400DE4C2E /* VisioMoveEssential.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */; };
+		2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */; };
+		2ABFA94C2A5619A400FF1D42 /* Visioglobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFA94B2A5619A400FF1D42 /* Visioglobe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,11 +27,16 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libVisioglobe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVisioglobe.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
+		2A38E31A2A56350A007A74B0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		2A38E31B2A56350B007A74B0 /* Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Application.xcconfig; sourceTree = "<group>"; };
+		2A38E31C2A56350B007A74B0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		2A38E31D2A56350B007A74B0 /* Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Tests.xcconfig; sourceTree = "<group>"; };
+		2A38E31E2A56350B007A74B0 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VisioMoveEssential.xcframework; sourceTree = "<group>"; };
+		2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Visioglobe.xib; sourceTree = "<group>"; };
+		2ABFA94B2A5619A400FF1D42 /* Visioglobe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visioglobe.swift; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* Visioglobe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Visioglobe.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* Visioglobe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Visioglobe-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* Visioglobe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visioglobe.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A6329522A532A3400DE4C2E /* VisioMoveEssential.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,15 +59,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2A6329502A532A3400DE4C2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
-				F4FF95D6245B92E800C19C63 /* Visioglobe.swift */,
+				2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */,
+				2A38E31B2A56350B007A74B0 /* Application.xcconfig */,
+				2A38E31C2A56350B007A74B0 /* Project-Debug.xcconfig */,
+				2A38E31A2A56350A007A74B0 /* Project-Release.xcconfig */,
+				2A38E31E2A56350B007A74B0 /* Project.xcconfig */,
+				2A38E31D2A56350B007A74B0 /* Tests.xcconfig */,
+				2ABFA94B2A5619A400FF1D42 /* Visioglobe.swift */,
 				B3E7B5891CC2AC0600A0062D /* Visioglobe.m */,
 				F4FF95D5245B92E700C19C63 /* Visioglobe-Bridging-Header.h */,
-
 				134814211AA4EA7D00B7C361 /* Products */,
+				2A6329502A532A3400DE4C2E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,10 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				F4FF95D7245B92E800C19C63 /* Visioglobe.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* Visioglobe.m in Sources */,
-
+				2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */,
+				2A38E3242A565112007A74B0 /* Visioglobe.m in Sources */,
+				2ABFA94C2A5619A400FF1D42 /* Visioglobe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +152,7 @@
 /* Begin XCBuildConfiguration section */
 		58B511ED1A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A38E31B2A56350B007A74B0 /* Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -184,6 +203,7 @@
 		};
 		58B511EE1A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A38E31B2A56350B007A74B0 /* Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -227,6 +247,7 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A38E31C2A56350B007A74B0 /* Project-Debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -238,16 +259,15 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Visioglobe;
 				SKIP_INSTALL = YES;
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Visioglobe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Debug;
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A38E31A2A56350A007A74B0 /* Project-Release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -259,10 +279,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Visioglobe;
 				SKIP_INSTALL = YES;
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Visioglobe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};

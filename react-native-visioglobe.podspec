@@ -15,7 +15,10 @@ Pod::Spec.new do |s|
 
   
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  
+  s.exclude_files = "ios/VisioMoveEssential.xcframework/**/*.{h,hpp}" 
+  s.preserve_paths = 'ios/VisioMoveEssential.xcframework'
+  s.public_header_files = 'ios/VisioMoveEssential.xcframework/Versions/A/Headers/.{h,hpp}'
+  s.vendored_frameworks = 'ios/VisioMoveEssential.xcframework'
 
   s.dependency "React-Core"
 end
