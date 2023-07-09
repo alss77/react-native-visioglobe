@@ -8,14 +8,13 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.2.1'
+    classpath 'com.android.tools.build:gradle:8.0.2'
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 def getExtOrDefault(name) {
   return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Visioglobe_' + name]
@@ -26,13 +25,17 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
+
+  namespace 'com.reactnativevisioglobe'
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
   buildToolsVersion getExtOrDefault('buildToolsVersion')
   defaultConfig {
+    // applicationId 'com.reactnativevisioglobe'
     minSdkVersion 21
     targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
     versionCode 1
     versionName "1.0"
+
   }
 
   buildTypes {
@@ -44,11 +47,8 @@ android {
     disable 'GradleCompatible'
   }
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-  kotlinOptions {
-    jvmTarget = "1.8"
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_17
   }
 }
 
@@ -126,17 +126,7 @@ repositories {
 def kotlin_version = getExtOrDefault('kotlinVersion')
 
 dependencies {
-  // implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
-  // implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-  // implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.3'
-  // implementation files('libs/VisioMoveEssential.aar')
-}
-
-allprojects {
-  repositories {
-    flatDir { dirs '$rootDir/libs' }
-  }
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
