@@ -1,18 +1,29 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React /* useState */ from 'react';
+import React from 'react';
 // import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 // import Visioglobe from 'react-native-visioglobe';
 
 export default function App() {
   /* const [open, setOpen] = useState(false);
   const poiIDs = ['poi1', 'poi2', 'poi3'];
-  const colors = ['#FF0000', '#00FF00', '#0000FF']; */
+  const colors = ['#FF0000', '#00FF00', '#0000FF'];
 
-  /* const openMapView = async () => {
+  const openMapView = async () => {
     try {
       await Visioglobe.presentVisioglobe();
     } catch (error) {
       console.error('Error openMapView:', error);
+    }
+  };
+
+  const multiply = async () => {
+    console.log('=====> Calling multiply');
+    try {
+      const result = await Visioglobe.multiply(12, 2);
+      console.log(result);
+    } catch (error) {
+      console.error('Error multiply:', error);
     }
   };
 
@@ -37,6 +48,7 @@ export default function App() {
   };
 
   const setMapHash = async () => {
+    console.log('=====> Calling setMapHash');
     await Visioglobe.setMapHash('dev-m2ca47a978ce45fd3f3334b7a1078272ec07655bc')
       .then(() => {
         console.log('setMapHash success');
@@ -50,6 +62,16 @@ export default function App() {
     await Visioglobe.getMapHash()
       .then((result) => {
         console.log('getMapHash success:', result);
+      })
+      .catch((error) => {
+        console.error('Error getMapHash:', error);
+      });
+  };
+
+  const getMapController = async () => {
+    await Visioglobe.getMapController()
+      .then((result) => {
+        console.log('getMapController success:', result);
       })
       .catch((error) => {
         console.error('Error getMapHash:', error);
@@ -83,7 +105,7 @@ export default function App() {
     } catch (error) {
       console.error('Error closeMapView:', error);
     }
-  }; */
+  };
 
   /* React.useEffect(() => {
     const mapDataDidLoadCallback = () => {
@@ -107,37 +129,48 @@ export default function App() {
 
   return (
     <>
-      {/* <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => setMapHash()}>
-        <Text style={styles.text}>Set Map Hash</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => getMapHash()}>
-        <Text style={styles.text}>Get Map Hash</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => initController()}>
-        <Text style={styles.text}>Init Controller</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => setPoisColor()}>
-        <Text style={styles.text}>Set Pois Solor</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => loadMapData()}>
-        <Text style={styles.text}>Load Map Data</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => setLifeCycleListener()}>
-        <Text style={styles.text}>Set Life Cycle</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => openMapView()}>
-        <Text style={styles.text}>Display Map</Text>
-      </TouchableOpacity>
-      {open ? (
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => closeMapView()}
-        >
-          <Text>Close</Text>
+      {/*
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={() => multiply()}>
+          <Text style={styles.text}>Multiply</Text>
         </TouchableOpacity>
-      ) : null} 
-    </View>*/}
+        <TouchableOpacity style={styles.button} onPress={() => setMapHash()}>
+          <Text style={styles.text}>Set Map Hash</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => getMapHash()}>
+          <Text style={styles.text}>Get Map Hash</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => initController()}
+        >
+          <Text style={styles.text}>Init Controller</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => getMapController()}
+        >
+          <Text style={styles.text}>Get Map Controller</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setLifeCycleListener()}
+        >
+          <Text style={styles.text}>Set Life Cycle</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => openMapView()}>
+          <Text style={styles.text}>Display Map</Text>
+        </TouchableOpacity>
+        {open ? (
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => closeMapView()}
+          >
+            <Text>Close</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+        */}
     </>
   );
 }

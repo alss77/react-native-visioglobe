@@ -55,6 +55,20 @@ class Visioglobe: UIViewController, VMEComputeRouteCallback, VMELifeCycleListene
         }
     }
 
+    @objc
+    func getMapController(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        print("====> getMapController")
+        print(mMapController)
+        print(self.mMapController)
+        if let mapController = mMapController {
+            resolve(mapController)
+        } else {
+            let error = NSError(domain: "com.yourdomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Map Controller not set"])
+            reject("MAP_CONTROLLER_NOT_SET", "Map Controller is not set", error)
+        }
+    }
+    
+
     class func randomColor() -> UIColor? {
         let lRed = Int(arc4random() % 255)
         let lGreen = Int(arc4random() % 255)
@@ -71,15 +85,23 @@ class Visioglobe: UIViewController, VMEComputeRouteCallback, VMELifeCycleListene
         print("=======> mMapController")
         print(mMapController)
 
-        /* print("=======> VIEW DID LOAD LOAD MAP DATA")
+        print("=======> VIEW DID LOAD LOAD MAP DATA")
         mMapController.loadMapData()
 
         print("=======> VIEW DID LOAD SET LISTENER")
-        mMapController.setLifeCycleListener(self) */
+        mMapController.setLifeCycleListener(self)
 
         /* if (self.responds(to: #selector(getter: UIViewController.edgesForExtendedLayout))) {
             self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 0);
         } */
+    }
+    
+    @objc
+    func mapDataDidLoad(mapController: VMEMapController, venueData: [String: Any]) {
+        print("=======> MAP DATA DID LOAD FUNCTION")
+        print("=======>  mMapView data")
+        print(mMapView)
+        mMapController?.loadMapView(mapView: mMapView)
     }
 
     @objc
@@ -128,17 +150,9 @@ class Visioglobe: UIViewController, VMEComputeRouteCallback, VMELifeCycleListene
         mapDataDidLoad(mapController: mMapController, venueData: [:])
     } */
 
-    @objc
-    func mapDataDidLoad(mapController: VMEMapController, venueData: [String: Any]) {
-        print("=======> MAP DATA DID LOAD FUNCTION")
-        print("=======>  mMapView data")
-        print(mMapView)
-        mMapController?.loadMapView(mapView: mMapView)
-    }
-
     deinit {
-        /* mMapController?.unloadMapData()
-        mMapController = nil */
+        mMapController?.unloadMapData()
+        mMapController = nil
     }
 
     @objc(multiply:withB:withResolver:withRejecter:)

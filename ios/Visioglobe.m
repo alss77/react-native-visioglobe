@@ -12,6 +12,8 @@ RCT_EXTERN_METHOD(setMapHash:(NSString *)mapHash)
 
 RCT_EXTERN_METHOD(getMapHash:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(getMapController:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(initController)
 
 RCT_EXTERN_METHOD(loadMapData)

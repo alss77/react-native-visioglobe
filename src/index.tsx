@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 type VisioglobeType = {
-  // multiply(a: number, b: number): Promise<number>;
+  multiply(a: number, b: number): Promise<number>;
   presentVisioglobe(): Promise<any>;
   placeAllColorSwitchAction(activate: boolean): Promise<any>;
   initController(): Promise<any>;
@@ -9,6 +9,7 @@ type VisioglobeType = {
   setLifeCycleListener(): Promise<any>;
   setMapHash(mapHash?: string): Promise<any>;
   getMapHash(): Promise<any>;
+  getMapController(): Promise<any>;
   unloadMapView(): Promise<any>;
   unloadMapData(): Promise<any>;
   setPoisColor(lpoiIDs: string[], lColors: string[]): Promise<boolean[]>;
