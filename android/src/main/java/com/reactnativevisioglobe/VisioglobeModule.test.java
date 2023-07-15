@@ -82,7 +82,8 @@ public final class VisioglobeModule extends Fragment {
       } catch (Exception var6) {
       }
 
-      builder.setMapPath("asset://map_bundle_theme.zip");
+      // builder.setMapPath("asset://map_bundle_theme.zip");
+      builder.setMapHash(mMapHash);
       builder.setMapSecretCode(0);
       Context var10003 = this.requireContext();
       Intrinsics.checkNotNullExpressionValue(var10003, "requireContext()");

@@ -1,7 +1,13 @@
 package com.reactnativevisioglobe;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -10,6 +16,7 @@ import com.facebook.react.bridge.ReactMethod;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -18,6 +25,7 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import com.visioglobe.visiomoveessential.VMEMapController;
+import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
 import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
 
@@ -27,8 +35,14 @@ public final class VisioglobeModule extends ReactContextBaseJavaModule {
 
   private VMEMapController mMapController;
   private VMEMapView mMapView;
-   VisioglobeModule(ReactApplicationContext context) {
+
+  private final ReactApplicationContext reactContext;
+  private Fragment fragmentClass;
+
+  VisioglobeModule(ReactApplicationContext context) {
       super(context);
+    reactContext = context;
+    fragmentClass = new Fragment();
    }
 
    @Override
@@ -52,7 +66,19 @@ public final class VisioglobeModule extends ReactContextBaseJavaModule {
       promise.resolve(a * b);
    }
 
-  /* private final VMELifeCycleListener mLifeCycleListener = (VMELifeCycleListener)(new VMELifeCycleListener() {
+   @ReactMethod
+   public final void initController() {
+     VMEMapControllerBuilder builder = new VMEMapControllerBuilder();
+
+     // builder.setMapPath("asset://map_bundle_theme.zip");
+     builder.setMapHash(mMapHash);
+     builder.setMapSecretCode(0);
+     Context var10003 = reactContext;
+     // Intrinsics.checkNotNullExpressionValue(var10003, "requireContext()");
+     // this.mMapController = new VMEMapController(var10003, builder);
+   }
+
+  private final VMELifeCycleListener mLifeCycleListener = (VMELifeCycleListener)(new VMELifeCycleListener() {
     public void mapDidInitializeEngine() {
       String lFilePath = VisioglobeModule.this.extractFromAssetsAndGetFilePath();
       CharSequence var2 = (CharSequence)lFilePath;
@@ -88,14 +114,30 @@ public final class VisioglobeModule extends ReactContextBaseJavaModule {
     }
   });
 
+  public void mapDidInitializeEngine() {
+    String lFilePath = VisioglobeModule.this.extractFromAssetsAndGetFilePath();
+    CharSequence var2 = (CharSequence)lFilePath;
+    VMEMapController var10000;
+    if (var2.length() != 0) {
+      var10000 = VisioglobeModule.this.mMapController;
+      Intrinsics.checkNotNull(var10000);
+      var10000.setMapFont(lFilePath);
+    } else {
+      var10000 = VisioglobeModule.this.mMapController;
+      Intrinsics.checkNotNull(var10000);
+      var10000.setMapFont("shizuru_regular.ttf");
+    }
+
+  }
+
   private final String extractFromAssetsAndGetFilePath() {
     StringBuilder var10002 = new StringBuilder();
-    Context var10003 = this.requireContext();
+    Context var10003 = reactContext;
     Intrinsics.checkNotNullExpressionValue(var10003, "requireContext()");
     File f = new File(var10002.append(var10003.getCacheDir().toString()).append("/").append("artifika_regular.ttf").toString());
     if (!f.exists()) {
       try {
-        Context var10000 = this.requireContext();
+        Context var10000 = reactContext;
         Intrinsics.checkNotNullExpressionValue(var10000, "requireContext()");
         InputStream var7 = var10000.getAssets().open("artifika_regular.ttf");
         Intrinsics.checkNotNullExpressionValue(var7, "requireContext().assets.…n(\"artifika_regular.ttf\")");
@@ -117,6 +159,36 @@ public final class VisioglobeModule extends ReactContextBaseJavaModule {
     return var8;
   }
 
+  @ReactMethod
+  public View presentVisioglobe(@NotNull LayoutInflater pInflater, @Nullable ViewGroup pContainer, @Nullable Bundle pSavedInstanceState) {
+    Intrinsics.checkNotNullParameter(pInflater, "pInflater");
+    if (this.mMapView == null) {
+      VMEMapController var10000;
+      try {
+        var10000 = this.mMapController;
+        Intrinsics.checkNotNull(var10000);
+        var10000.deleteCachedMap(mMapHash);
+      } catch (Exception var6) {
+      }
+
+      Context var10003 = reactContext;
+      Intrinsics.checkNotNullExpressionValue(var10003, "requireContext()");
+      var10000 = this.mMapController;
+      Intrinsics.checkNotNull(var10000);
+      var10000.setLifeCycleListener(this.mLifeCycleListener);
+      var10000 = this.mMapController;
+      Intrinsics.checkNotNull(var10000);
+      VMEMapView var10001 = this.mMapView;
+      Intrinsics.checkNotNull(var10001);
+      var10000.loadMapView(var10001);
+      var10000 = this.mMapController;
+      Intrinsics.checkNotNull(var10000);
+      var10000.loadMapData();
+    }
+
+    return (View)this.mMapView;
+  }
+
   // $FF: synthetic method
   public static final void access$setMMapController$p(VisioglobeModule $this, VMEMapController var1) {
     $this.mMapController = var1;
@@ -129,7 +201,7 @@ public final class VisioglobeModule extends ReactContextBaseJavaModule {
 
   // $FF: synthetic method
   public void onDestroyView() {
-    super.onDestroyView();
+    // fragmentClass.onDestroyView();
     // this._$_clearFindViewByIdCache();
-  } */
+  }
 }
