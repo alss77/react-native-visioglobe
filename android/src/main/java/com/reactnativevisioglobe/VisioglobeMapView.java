@@ -2,16 +2,14 @@ package com.reactnativevisioglobe;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
@@ -19,30 +17,53 @@ import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
-public final class VisioglobeModule extends Fragment {
-  private static final Logger logger = Logger.getLogger(VisioglobeModule.class.getName());
+public final class VisioglobeMapView extends Fragment {
   private VMEMapController mMapController;
   private VMEMapView mMapView;
 
   private String mMapHash;
 
+  private static final String TAG = "VisioglobeMapView";
+
+  public final void setMapHash(String mapHash) {
+    mMapHash = mapHash;
+  }
+
+  public final String getMapHash() {
+    return mMapHash;
+  }
+
+  public final void initController(Context context) {
+    VMEMapControllerBuilder builder = new VMEMapControllerBuilder();
+
+    // builder.setMapPath("asset://map_bundle_theme.zip");
+    builder.setMapHash(mMapHash);
+    builder.setMapSecretCode(0);
+    Log.d(TAG, "====> Init Controller");
+    if (context != null) {
+      Log.d(TAG, "====> Context is set");
+    } else {
+      Log.d(TAG, "====> Context is not set");
+    }
+    this.mMapController = new VMEMapController(context, builder);
+    Log.d(TAG, "====> Controller is set");
+  }
   private final VMELifeCycleListener mLifeCycleListener = (VMELifeCycleListener)(new VMELifeCycleListener() {
     public void mapDidInitializeEngine() {
-      String lFilePath = VisioglobeModule.this.extractFromAssetsAndGetFilePath();
+      String lFilePath = VisioglobeMapView.this.extractFromAssetsAndGetFilePath();
       CharSequence var2 = (CharSequence)lFilePath;
       VMEMapController var10000;
       if (var2.length() != 0) {
-        var10000 = VisioglobeModule.this.mMapController;
+        var10000 = VisioglobeMapView.this.mMapController;
         Intrinsics.checkNotNull(var10000);
         var10000.setMapFont(lFilePath);
       } else {
-        var10000 = VisioglobeModule.this.mMapController;
+        var10000 = VisioglobeMapView.this.mMapController;
         Intrinsics.checkNotNull(var10000);
         var10000.setMapFont("shizuru_regular.ttf");
       }
@@ -52,9 +73,9 @@ public final class VisioglobeModule extends Fragment {
     public void mapDataDidLoad(@NotNull JSONObject mapVenueInfo) {
       Intrinsics.checkNotNullParameter(mapVenueInfo, "mapVenueInfo");
       super.mapDataDidLoad(mapVenueInfo);
-      VMEMapController var10000 = VisioglobeModule.this.mMapController;
+      VMEMapController var10000 = VisioglobeMapView.this.mMapController;
       Intrinsics.checkNotNull(var10000);
-      VMEMapView var10001 = VisioglobeModule.this.mMapView;
+      VMEMapView var10001 = VisioglobeMapView.this.mMapView;
       Intrinsics.checkNotNull(var10001);
       var10000.loadMapView(var10001);
     }
@@ -68,8 +89,9 @@ public final class VisioglobeModule extends Fragment {
     }
   });
 
-  @Nullable
+  @Override
   public View onCreateView(@NotNull LayoutInflater pInflater, @Nullable ViewGroup pContainer, @Nullable Bundle pSavedInstanceState) {
+    Log.d(TAG, "====> On Create View");
     Intrinsics.checkNotNullParameter(pInflater, "pInflater");
     if (this.mMapView == null) {
       VMEMapControllerBuilder builder = new VMEMapControllerBuilder();
@@ -148,12 +170,12 @@ public final class VisioglobeModule extends Fragment {
   }
 
   // $FF: synthetic method
-  public static final void access$setMMapController$p(VisioglobeModule $this, VMEMapController var1) {
+  public static final void access$setMMapController$p(VisioglobeMapView $this, VMEMapController var1) {
     $this.mMapController = var1;
   }
 
   // $FF: synthetic method
-  public static final void access$setMMapView$p(VisioglobeModule $this, VMEMapView var1) {
+  public static final void access$setMMapView$p(VisioglobeMapView $this, VMEMapView var1) {
     $this.mMapView = var1;
   }
 

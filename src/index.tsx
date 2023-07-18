@@ -1,4 +1,8 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, requireNativeComponent } from 'react-native';
+
+export const MyViewManager = requireNativeComponent('MyViewManager');
+
+export const MyCustomView = requireNativeComponent('MyCustomView');
 
 type VisioglobeType = {
   multiply(a: number, b: number): Promise<number>;
