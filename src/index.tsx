@@ -19,31 +19,17 @@ VisioMapView.propTypes = {
 export { VisioMapView };
 
 type VisioglobeType = {
-  multiply(a: number, b: number): Promise<number>;
-  presentVisioglobe(): Promise<any>;
-  placeAllColorSwitchAction(activate: boolean): Promise<any>;
-  initController(): Promise<any>;
-  loadMapData(): Promise<any>;
-  setLifeCycleListener(): Promise<any>;
-  setMapHash(mapHash?: string): Promise<any>;
-  getMapHash(): Promise<any>;
-  getMapController(): Promise<any>;
-  unloadMapView(): Promise<any>;
-  unloadMapData(): Promise<any>;
-  setPoisColor(lpoiIDs: string[], lColors: string[]): Promise<boolean[]>;
-  setPoisSize(
-    lpoiIDs: string[],
-    sizes: number[],
-    animated: boolean[]
-  ): Promise<boolean[]>;
-  resetPoisColor(lpoiIDs: string[]): Promise<boolean[]>;
-  initRouteRequest(): Promise<any>;
-  setOrigin(position: any): Promise<any>;
-  addDestinations(positions: any[]): Promise<any>;
-  computeRoute(): Promise<any>;
-  createLocationFromLocation(location: any): Promise<any>;
-  createPositionFromLocation(location: any): Promise<any>;
-  // listenerMapDataDidLoad(data: any): Promise<any>;
+  initRouteRequest(type : string, lDestOrder:string,accessible: boolean):Promise<any>;
+  setRouteOrigin(VMERouteRequest : any, originID : string): void;
+  addRouteDestination(VMERouteRequest : any, destination :Array<string>): void;
+  computeRoute(VMERouteRequest: any, callback: any): void;
+  getPoiPosition (poiID: string): Promise<any>;
+  createLocationFromLocation (location : any): Promise<any>;
+  createPositionFromPosition (position : any) : Promise<any>;
+  getPoi(poiID: string) : Promise<any>;
+  addPoi(data: string) : Promise<Array<String>>;
+  removePois(data :Array<string>) : Promise<boolean>;
+  getVersion() : Promise<string>;
 };
 
 const { Visioglobe } = NativeModules;
