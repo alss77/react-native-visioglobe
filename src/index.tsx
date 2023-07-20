@@ -1,8 +1,22 @@
-import { NativeModules, requireNativeComponent } from 'react-native';
+import PropTypes from 'prop-types';
+import {
+  NativeModules,
+  requireNativeComponent,
+  ViewPropTypes,
+} from 'react-native';
 
-export const MyViewManager = requireNativeComponent('MyViewManager');
+// export const MyViewManager = requireNativeComponent('MyViewManager');
 
-export const MyCustomView = requireNativeComponent('MyCustomView');
+const VisioMapView = requireNativeComponent('VisioMapView');
+
+VisioMapView.propTypes = {
+  ...ViewPropTypes,
+  mapHash: PropTypes.string,
+  mapPath: PropTypes.string,
+  mapSecret: PropTypes.number,
+};
+
+export { VisioMapView };
 
 type VisioglobeType = {
   multiply(a: number, b: number): Promise<number>;

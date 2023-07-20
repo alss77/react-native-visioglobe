@@ -1,7 +1,5 @@
 package com.reactnativevisioglobe;
 
-import com.reactnativevisioglobe.R;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,15 +23,23 @@ import java.io.InputStream;
 
 import kotlin.jvm.internal.Intrinsics;
 
-public class MyFragment extends Fragment {
+public class VisioFragment extends Fragment {
 
-  private static final String TAG = "MyFragment";
+  private static final String TAG = "VisioFragment";
   private ViewGroup mFragment;
 
   private VMEMapController mMapController;
   private VMEMapView mMapView;
 
   private String mMapHash;
+  private String mMapPath;
+  private int mMapSecret;
+
+  public VisioFragment(String hash, String path, int secret) {
+    this.mMapHash = hash;
+    this.mMapPath = path;
+    this.mMapSecret = secret;
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -58,7 +64,7 @@ public class MyFragment extends Fragment {
       } catch (Exception var6) {
       }
 
-      builder.setMapHash("dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab");
+      builder.setMapHash(mMapHash);
       builder.setMapSecretCode(0);
       Context context = this.getContext();
       Intrinsics.checkNotNullExpressionValue(context, "requireContext()");
@@ -86,15 +92,15 @@ public class MyFragment extends Fragment {
 
   private final VMELifeCycleListener mLifeCycleListener = (VMELifeCycleListener)(new VMELifeCycleListener() {
     public void mapDidInitializeEngine() {
-      String lFilePath = MyFragment.this.extractFromAssetsAndGetFilePath();
+      String lFilePath = VisioFragment.this.extractFromAssetsAndGetFilePath();
       CharSequence var2 = (CharSequence)lFilePath;
       VMEMapController controller;
       if (var2.length() != 0) {
-        controller = MyFragment.this.mMapController;
+        controller = VisioFragment.this.mMapController;
         Intrinsics.checkNotNull(controller);
         controller.setMapFont(lFilePath);
       } else {
-        controller = MyFragment.this.mMapController;
+        controller = VisioFragment.this.mMapController;
         Intrinsics.checkNotNull(controller);
         controller.setMapFont("shizuru_regular.ttf");
       }
@@ -104,9 +110,9 @@ public class MyFragment extends Fragment {
       Log.d(TAG, "====> MAP DATA DID LOAD");
       Intrinsics.checkNotNullParameter(mapVenueInfo, "mapVenueInfo");
       super.mapDataDidLoad(mapVenueInfo);
-      VMEMapController var10000 = MyFragment.this.mMapController;
+      VMEMapController var10000 = VisioFragment.this.mMapController;
       Intrinsics.checkNotNull(var10000);
-      VMEMapView var10001 = MyFragment.this.mMapView;
+      VMEMapView var10001 = VisioFragment.this.mMapView;
       Intrinsics.checkNotNull(var10001);
       var10000.loadMapView(var10001);
     }

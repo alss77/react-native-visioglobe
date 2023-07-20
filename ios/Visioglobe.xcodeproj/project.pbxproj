@@ -11,9 +11,9 @@
 		2A6329522A532A3400DE4C2E /* VisioMoveEssential.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */; };
 		2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */; };
 		2ABFA94C2A5619A400FF1D42 /* Visioglobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFA94B2A5619A400FF1D42 /* Visioglobe.swift */; };
-		2AE10F532A65C30C00189550 /* MyCustomViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F522A65C30C00189550 /* MyCustomViewManager.swift */; };
-		2AE10F552A65C39400189550 /* MyCustomViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F542A65C39400189550 /* MyCustomViewManager.m */; };
-		2AE10F572A65E23C00189550 /* MyCustomView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F562A65E1A600189550 /* MyCustomView.xib */; };
+		2AE10F532A65C30C00189550 /* VisioMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F522A65C30C00189550 /* VisioMapViewManager.swift */; };
+		2AE10F552A65C39400189550 /* VisioMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F542A65C39400189550 /* VisioMapViewManager.m */; };
+		2AFE12002A6735170019409B /* VisioMapView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2AE10F562A65E1A600189550 /* VisioMapView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,9 +38,9 @@
 		2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VisioMoveEssential.xcframework; sourceTree = "<group>"; };
 		2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Visioglobe.xib; sourceTree = "<group>"; };
 		2ABFA94B2A5619A400FF1D42 /* Visioglobe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visioglobe.swift; sourceTree = "<group>"; };
-		2AE10F522A65C30C00189550 /* MyCustomViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomViewManager.swift; sourceTree = "<group>"; };
-		2AE10F542A65C39400189550 /* MyCustomViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCustomViewManager.m; sourceTree = "<group>"; };
-		2AE10F562A65E1A600189550 /* MyCustomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCustomView.xib; sourceTree = "<group>"; };
+		2AE10F522A65C30C00189550 /* VisioMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisioMapViewManager.swift; sourceTree = "<group>"; };
+		2AE10F542A65C39400189550 /* VisioMapViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisioMapViewManager.m; sourceTree = "<group>"; };
+		2AE10F562A65E1A600189550 /* VisioMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VisioMapView.xib; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* Visioglobe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Visioglobe.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* Visioglobe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Visioglobe-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,9 +76,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				2AE10F562A65E1A600189550 /* MyCustomView.xib */,
-				2AE10F542A65C39400189550 /* MyCustomViewManager.m */,
-				2AE10F522A65C30C00189550 /* MyCustomViewManager.swift */,
+				2AE10F562A65E1A600189550 /* VisioMapView.xib */,
+				2AE10F542A65C39400189550 /* VisioMapViewManager.m */,
+				2AE10F522A65C30C00189550 /* VisioMapViewManager.swift */,
 				2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */,
 				2A38E31B2A56350B007A74B0 /* Application.xcconfig */,
 				2A38E31C2A56350B007A74B0 /* Project-Debug.xcconfig */,
@@ -150,9 +150,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AE10F572A65E23C00189550 /* MyCustomView.xib in Sources */,
-				2AE10F532A65C30C00189550 /* MyCustomViewManager.swift in Sources */,
-				2AE10F552A65C39400189550 /* MyCustomViewManager.m in Sources */,
+				2AFE12002A6735170019409B /* VisioMapView.xib in Sources */,
+				2AE10F532A65C30C00189550 /* VisioMapViewManager.swift in Sources */,
+				2AE10F552A65C39400189550 /* VisioMapViewManager.m in Sources */,
 				2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */,
 				2A38E3242A565112007A74B0 /* Visioglobe.m in Sources */,
 				2ABFA94C2A5619A400FF1D42 /* Visioglobe.swift in Sources */,

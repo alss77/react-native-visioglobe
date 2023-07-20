@@ -1,5 +1,7 @@
 package com.reactnativevisioglobe;
 
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,25 +12,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
+import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class MyViewManager extends ViewGroupManager<FrameLayout> {
+public class VisioMapView extends ViewGroupManager<FrameLayout> {
 
-  public static final String REACT_CLASS = "MyViewManager";
+  public static final String REACT_CLASS = "VisioMapView";
   public final int COMMAND_CREATE = 1;
+  public final int COMMAND_CUSTOM = 2;
   private int propWidth;
   private int propHeight;
 
+  private String propMapHash;
+  private String propMapPath;
+  private int propSecret;
+
+
   ReactApplicationContext reactContext;
 
-  public MyViewManager(ReactApplicationContext reactContext) {
+  public VisioMapView(ReactApplicationContext reactContext) {
     this.reactContext = reactContext;
   }
 
@@ -51,7 +61,10 @@ public class MyViewManager extends ViewGroupManager<FrameLayout> {
   @Nullable
   @Override
   public Map<String, Integer> getCommandsMap() {
-    return MapBuilder.of("create", COMMAND_CREATE);
+    Map<String, Integer> commands = new HashMap<>();
+    commands.put("create", COMMAND_CREATE);
+    commands.put("customMethod", COMMAND_CUSTOM);
+    return commands;
   }
 
   /**
@@ -67,9 +80,14 @@ public class MyViewManager extends ViewGroupManager<FrameLayout> {
     int reactNativeViewId = args.getInt(0);
     int commandIdInt = Integer.parseInt(commandId);
 
+    Log.d("COMMAND", String.valueOf(commandIdInt));
     switch (commandIdInt) {
       case COMMAND_CREATE:
         createFragment(root, reactNativeViewId);
+        break;
+      case COMMAND_CUSTOM:
+        String arg = args.getString(0);
+        customMethod(arg);
         break;
       default: {}
     }
@@ -86,6 +104,26 @@ public class MyViewManager extends ViewGroupManager<FrameLayout> {
     }
   }
 
+  @ReactProp(name = "hash")
+  public void setMapHash(FrameLayout view, String value) {
+    propMapHash = value;
+  }
+
+  @ReactProp(name = "path")
+  public void setMapPath(FrameLayout view, String value) {
+    propMapPath = value;
+  }
+
+  @ReactProp(name = "secret")
+  public void setMapSecret(FrameLayout view, int value) {
+    propSecret = value;
+  }
+
+  @ReactMethod
+  public void customMethod(String message) {
+    Log.d("VisioMapViewManager", message);
+  }
+
   /**
    * Replace your React Native view with a custom fragment
    */
@@ -93,7 +131,8 @@ public class MyViewManager extends ViewGroupManager<FrameLayout> {
     ViewGroup parentView = (ViewGroup) root.findViewById(reactNativeViewId);
     setupLayout(parentView);
 
-    final MyFragment myFragment = new MyFragment();
+    Log.d("VisioMapView", "====> CALLED");
+    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret);
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
     activity.getSupportFragmentManager()
       .beginTransaction()

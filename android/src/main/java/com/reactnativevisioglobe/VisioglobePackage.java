@@ -11,17 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 public final class VisioglobePackage implements ReactPackage {
-  /* @NotNull
-  public List createNativeModules(@NotNull ReactApplicationContext reactContext) {
-    Intrinsics.checkNotNullParameter(reactContext, "reactContext");
-    return CollectionsKt.listOf(new VisioglobeModule(reactContext));
-  } */
-
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
       return Arrays.<ViewManager>asList(
-        new MyViewManager(reactContext)
+        new VisioMapView(reactContext)
       );
     }
 
@@ -34,11 +28,5 @@ public final class VisioglobePackage implements ReactPackage {
 
         return modules;
     }
-
-  /* @NotNull
-  public List createViewManagers(@NotNull ReactApplicationContext reactContext) {
-    Intrinsics.checkNotNullParameter(reactContext, "reactContext");
-    return CollectionsKt.emptyList();
-  } */
 }
 
