@@ -12,5 +12,6 @@
 @interface RCT_EXTERN_MODULE(VisioMapViewManager, RCTViewManager)
 RCT_EXPORT_VIEW_PROPERTY(mapHash, NSString)
 RCT_EXPORT_VIEW_PROPERTY(mapPath, NSString)
-RCT_EXPORT_VIEW_PROPERTY(mapSecret, NSString)
+RCT_EXPORT_VIEW_PROPERTY(mapSecret, NSNumber)
+RCT_EXTERN_METHOD(customFunctionToCall: (nonnull NSNumber *) reactTag)
 @end

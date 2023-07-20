@@ -13,44 +13,17 @@ import VisioMoveEssential
 @objc(VisioMapViewManager)
 class VisioMapViewManager: RCTViewManager {
     override func view() -> UIView! {
-        return VisioMapView(frame: .zero, mapHash: _mapHash, mapPath: _mapPath, mapSecret: _mapSecret)
+        return VisioMapView()
       }
 
-
-    private var _mapHash: String = ""
-    private var _mapPath: String = ""
-    private var _mapSecret: Int = 0
-
-    @objc var mapHash: String {
-        get {
-            return _mapHash
-        }
-        set {
-            _mapHash = newValue
-            print("RECEIVE MAP HASH")
-            print(_mapHash)
-        }
-    }
-    
-    @objc var mapPath: String {
-        get {
-            return _mapPath
-        }
-        set {
-            _mapPath = newValue
-            print("RECEIVE MAP PATH")
-            print(_mapPath)
-        }
-    }
-    
-    @objc var mapSecret: String {
-        get {
-            return String(_mapSecret)
-        }
-        set {
-            _mapSecret = Int(newValue) ?? 0
-            print("RECEIVE MAP SECRET")
-            print(_mapSecret)
+    @objc
+    func customFunctionToCall(_ reactTag: NSNumber) {
+        print("=====> FIRST CUSTOM CALL FROM VIEW MANAGER")
+        print(reactTag)
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.customFunctionToCall()
+            }
         }
     }
     
@@ -64,12 +37,13 @@ class VisioMapView: UIView, VMELifeCycleListener {
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
     
-    private var mapHash: String = ""
-    private var mapPath: String = ""
-    private var mapSecret: Int = 0
+    @objc var mapHash: NSString = ""
+    @objc var mapPath: NSString = ""
+    @objc var mapSecret: NSNumber = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("====> INIT")
 
         self.backgroundColor = UIColor.blue
 
@@ -78,9 +52,26 @@ class VisioMapView: UIView, VMELifeCycleListener {
         // label.frame = CGRect(x: 10, y: 10, width: 100, height: 30)
         // self.addSubview(label)
 
+        /* mMapController = VMEMapController.initController(builderBlock: { builder in
+            builder.mapHash = ""
+            builder.mapSecretCode = 0
+        })
+        mMapView = VMEMapView(mapController: mMapController, frame: self.bounds)
+        self.addSubview(mMapView)
+
+        mMapController.setLifeCycleListener(self)
+        mMapController.loadMapData() */
+    }
+    
+    override func didSetProps(_ changedProps: [String]!) {
+        print("====> DID SET PROPS")
+        print(self.mapHash as String)
+        print(self.mapPath as String)
+        print(Int32(truncating: self.mapSecret))
+        
         mMapController = VMEMapController.initController(builderBlock: { builder in
-            builder.mapHash = self.mapHash
-            builder.mapSecretCode = self.mapSecret
+            builder.mapHash = self.mapHash as String
+            builder.mapSecretCode = Int(truncating: self.mapSecret)
         })
         mMapView = VMEMapView(mapController: mMapController, frame: self.bounds)
         self.addSubview(mMapView)
@@ -90,13 +81,8 @@ class VisioMapView: UIView, VMELifeCycleListener {
     }
     
 
-    // This is your custom initializer
-    convenience init(frame: CGRect, mapHash: String, mapPath: String, mapSecret: Int) {
-        self.init(frame: frame)
-        self.mapHash = mapHash
-        self.mapPath = mapPath
-        self.mapSecret = mapSecret
-        // other initialization stuff you need
+    func customFunctionToCall() {
+        print("=====> FIRST CUSTOM CALL FROM VIEW CLASS")
     }
 
     required init?(coder aDecoder: NSCoder) {

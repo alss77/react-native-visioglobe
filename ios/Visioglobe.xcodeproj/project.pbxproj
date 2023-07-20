@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A25832F2A69DB9500A171BD /* VisioModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A25832E2A69DB9500A171BD /* VisioModule.m */; };
+		2A2583312A69DBC800A171BD /* VisioModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2583302A69DBC800A171BD /* VisioModule.swift */; };
 		2A38E3242A565112007A74B0 /* Visioglobe.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Visioglobe.m */; };
 		2A6329522A532A3400DE4C2E /* VisioMoveEssential.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6329512A532A3400DE4C2E /* VisioMoveEssential.xcframework */; };
 		2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2A9AD9A32A56D66C002897E0 /* Visioglobe.xib */; };
@@ -30,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libVisioglobe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVisioglobe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A25832E2A69DB9500A171BD /* VisioModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisioModule.m; sourceTree = "<group>"; };
+		2A2583302A69DBC800A171BD /* VisioModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisioModule.swift; sourceTree = "<group>"; };
 		2A38E31A2A56350A007A74B0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
 		2A38E31B2A56350B007A74B0 /* Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Application.xcconfig; sourceTree = "<group>"; };
 		2A38E31C2A56350B007A74B0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				2A2583302A69DBC800A171BD /* VisioModule.swift */,
+				2A25832E2A69DB9500A171BD /* VisioModule.m */,
 				2AE10F562A65E1A600189550 /* VisioMapView.xib */,
 				2AE10F542A65C39400189550 /* VisioMapViewManager.m */,
 				2AE10F522A65C30C00189550 /* VisioMapViewManager.swift */,
@@ -154,7 +160,9 @@
 				2AE10F532A65C30C00189550 /* VisioMapViewManager.swift in Sources */,
 				2AE10F552A65C39400189550 /* VisioMapViewManager.m in Sources */,
 				2A9AD9A42A56D699002897E0 /* Visioglobe.xib in Sources */,
+				2A2583312A69DBC800A171BD /* VisioModule.swift in Sources */,
 				2A38E3242A565112007A74B0 /* Visioglobe.m in Sources */,
+				2A25832F2A69DB9500A171BD /* VisioModule.m in Sources */,
 				2ABFA94C2A5619A400FF1D42 /* Visioglobe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
