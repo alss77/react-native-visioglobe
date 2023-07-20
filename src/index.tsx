@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import {
   NativeModules,
-  requireNativeComponent,
   ViewPropTypes,
+  requireNativeComponent,
 } from 'react-native';
 
 // export const MyViewManager = requireNativeComponent('MyViewManager');
@@ -28,6 +28,7 @@ type VisioglobeType = {
   createPositionFromPosition (position : any) : Promise<any>;
   getPoi(poiID: string) : Promise<any>;
   addPoi(data: string) : Promise<Array<String>>;
+  updatesPois(data : string) : Promise<Array<String>>;
   removePois(data :Array<string>) : Promise<boolean>;
   getVersion() : Promise<string>;
 };
