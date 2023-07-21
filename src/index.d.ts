@@ -38,22 +38,18 @@ declare const VisioMapView: React.FC<VMEMapViewProp>;
 export default VisioMapView;
 
 /* type VisioglobeType = {
-  initRouteRequest(
-    type: string,
-    lDestOrder: string,
-    accessible: boolean
-  ): Promise<any>;
-  setRouteOrigin(VMERouteRequest: any, originID: string): void;
-  addRouteDestination(VMERouteRequest: any, destination: Array<string>): void;
-  computeRoute(VMERouteRequest: any, callback: any): void;
-  getPoiPosition(poiID: string): Promise<any>;
-  createLocationFromLocation(location: any): Promise<any>;
-  createPositionFromPosition(position: any): Promise<any>;
-  getPoi(poiID: string): Promise<any>;
-  addPoi(data: string): Promise<Array<String>>;
-  updatesPois(data: string): Promise<Array<String>>;
-  removePois(data: Array<string>): Promise<boolean>;
-  getVersion(): Promise<string>;
+  initRouteRequest(type : string, lDestOrder:string, accessible: boolean) : Promise<VMERouteRequest>; 
+  setRoute Origin(routeRequest : VMERouteRequest, originID : string) : void; 
+  addRouteDestination(routeRequest : VMERouteRequest, destination :Array<string>) : void; 
+  computeRoute(routeRequest: VMERouteRequest, callback: VMERouteCallback) : void;
+  getPoiPosition (poiID: string) : Promise<VMEPosition>; 
+  createLocationFromLocation (location : VMELocation) : Promise<VMELocation>; 
+  createPositionFromLocation (position : VMEPosition) : Promise<VMELocation>; 
+  getPoi(poiID: string) : Promise<VMEPoi>; 
+  addPoi(data: JSON) : Promise<Array<String>>; 
+  updatesPois(data : JSON) : Promise<Array<String>>; 
+  removePois(data : Array<string>) : void; 
+  getVersion() : Promise<string>;
 };
 
 const { Visioglobe } = NativeModules;
