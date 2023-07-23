@@ -15,18 +15,13 @@ public final class VisioglobePackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
       return Arrays.<ViewManager>asList(
-        new VisioMapView(reactContext)
+        new VisioMapViewManager(reactContext)
       );
     }
 
     @Override
-    public List<NativeModule> createNativeModules(
-            ReactApplicationContext reactContext) {
-        List<NativeModule> modules = new ArrayList<>();
-
-        modules.add(new VisioglobeModule(reactContext));
-
-        return modules;
+    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+      return Arrays.<NativeModule>asList(new VisioglobeModule(reactContext));
     }
 }
 

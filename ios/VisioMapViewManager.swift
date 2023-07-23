@@ -27,12 +27,69 @@ class VisioMapViewManager: RCTViewManager {
         }
     }
     
+    @objc
+    func setPois(_ reactTag: NSNumber, data: NSString) {
+        print("=====> SET POIS FROM VIEW MANAGER")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.setPois(String(data))
+            }
+        }
+    }
+    
+    class func randomColor() -> UIColor? {
+        let lRed = Int(arc4random() % 255)
+        let lGreen = Int(arc4random() % 255)
+        let lBlue = Int(arc4random() % 255)
+        let lRandomColor = UIColor(red: CGFloat(Double(lRed) / 255.0), green: CGFloat(Double(lGreen) / 255.0), blue: CGFloat(Double(lBlue) / 255.0), alpha: 1.0)
+        return lRandomColor
+    }
+    
+    @objc
+    func setPoisColor(_ reactTag: NSNumber, poiIDs: [NSString]) {
+        print("=====> SET POIS COLOR FROM VIEW MANAGER")
+        print(poiIDs)
+        let poiIDsToString = poiIDs.map { $0 as String }
+        let lRandomColor = VisioMapViewManager.randomColor()
+        var lColors = [UIColor]()
+        for _ in poiIDsToString {
+            lColors.append(lRandomColor!)
+        }
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.setPoisColor(poiIDsToString, lColors: lColors)
+            }
+        }
+    }
+    
+    @objc
+    func resetPoisColor(_ reactTag: NSNumber) {
+        print("=====> SET POIS FROM VIEW MANAGER")
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.resetPoisColor()
+            }
+        }
+    }
+    
+    @objc
+    func computeRoute(_ reactTag: NSNumber, origin: NSString, destinations: [NSString], optimize: NSNumber?) {
+        print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
+        let lDestinations = destinations.map { $0 as String }
+        let boolOptimize = optimize?.boolValue ?? false
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                view.computeRoute(String(origin), lDestinations: lDestinations, optimize: boolOptimize)
+            }
+        }
+    }
+    
   override static func requiresMainQueueSetup() -> Bool {
     return true
   }
 }
 
-class VisioMapView: UIView, VMELifeCycleListener {
+class VisioMapView: UIView, VMELifeCycleListener, VMEComputeRouteCallback {
     var mMapController: VMEMapController!
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
@@ -44,23 +101,6 @@ class VisioMapView: UIView, VMELifeCycleListener {
     override init(frame: CGRect) {
         super.init(frame: frame)
         print("====> INIT")
-
-        self.backgroundColor = UIColor.blue
-
-        // Initialize the map view
-
-        // label.frame = CGRect(x: 10, y: 10, width: 100, height: 30)
-        // self.addSubview(label)
-
-        /* mMapController = VMEMapController.initController(builderBlock: { builder in
-            builder.mapHash = ""
-            builder.mapSecretCode = 0
-        })
-        mMapView = VMEMapView(mapController: mMapController, frame: self.bounds)
-        self.addSubview(mMapView)
-
-        mMapController.setLifeCycleListener(self)
-        mMapController.loadMapData() */
     }
     
     override func didSetProps(_ changedProps: [String]!) {
@@ -80,9 +120,52 @@ class VisioMapView: UIView, VMELifeCycleListener {
         mMapController.loadMapData()
     }
     
-
     func customFunctionToCall() {
-        print("=====> FIRST CUSTOM CALL FROM VIEW CLASS")
+        print("=====> LOG FROM CUSTOM FUNCTION")
+    }
+    
+    
+    func setPois(_ data: String) {
+        var result = mMapController.setPois(data: data);
+        print("=====> SET POIS RESULT")
+        print(result)
+    }
+    
+    func setPoisColor(_ poiIDs: [String], lColors: [UIColor]) {
+        let result = mMapController.setPoisColor(poiIDs: poiIDs, colors: lColors)
+        print("=====> SET POIS COLOR RESULT")
+        print(result)
+    }
+    
+    func resetPoisColor() {
+        let lPoiIDs = mMapController.queryAllPoiIDs()
+        print("=====> RESET POIS FROM FRAGMENT")
+        print(lPoiIDs)
+        let result = mMapController.resetPoisColor(poiIDs: lPoiIDs);
+        print("=====> RESET POIS COLOR RESULT")
+        print(result)
+    }
+    
+    // MARK: - VMEComputeRouteCallback
+    func computeRouteDidFinish(mapController: VMEMapController, parameters routeRequest: VMERouteRequest, result routeResult: VMERouteResult) -> Bool {
+        print(String(format: "computeRouteDidFinish duration: %.0fmins and length: %.0fm ", (routeResult.duration) / 60, routeResult.length))
+        return true
+    }
+    
+    func computeRouteDidFail(mapController: VMEMapController, parameters routeRequest: VMERouteRequest, error: String) {
+        print("computeRouteDidFail error: \(error)")
+    }
+    
+    
+    func computeRoute(_ origin: String, lDestinations: [String], optimize: Bool?) {
+        print("=====> COMPUTE ROUTE")
+        let optimizeUnwrapped = optimize ?? false // If optimize is nil, false will be used.
+        let lDestOrder = optimizeUnwrapped ? VMERouteDestinationsOrder.optimal : VMERouteDestinationsOrder.inOrder
+        let lRouteRequest = VMERouteRequest(requestType: VMERouteRequestType.fastest, destinationsOrder: lDestOrder)
+        lRouteRequest.setOrigin(origin)
+        if (lRouteRequest.addDestinations(lDestinations)) {
+            mMapController.computeRoute(lRouteRequest, callback: self)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

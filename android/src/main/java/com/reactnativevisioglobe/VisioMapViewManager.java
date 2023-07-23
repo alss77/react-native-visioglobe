@@ -1,6 +1,5 @@
 package com.reactnativevisioglobe;
 
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
@@ -14,7 +13,9 @@ import androidx.fragment.app.FragmentActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.NativeViewHierarchyManager;
+import com.facebook.react.uimanager.UIBlock;
+import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ViewGroupManager;
@@ -23,9 +24,9 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VisioMapView extends ViewGroupManager<FrameLayout> {
+public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
 
-  public static final String REACT_CLASS = "VisioMapView";
+  public static final String REACT_CLASS = "VisioMapViewManager";
   public final int COMMAND_CREATE = 1;
   public final int COMMAND_CUSTOM = 2;
   private int propWidth;
@@ -38,7 +39,7 @@ public class VisioMapView extends ViewGroupManager<FrameLayout> {
 
   ReactApplicationContext reactContext;
 
-  public VisioMapView(ReactApplicationContext reactContext) {
+  public VisioMapViewManager(ReactApplicationContext reactContext) {
     this.reactContext = reactContext;
   }
 
@@ -85,10 +86,6 @@ public class VisioMapView extends ViewGroupManager<FrameLayout> {
       case COMMAND_CREATE:
         createFragment(root, reactNativeViewId);
         break;
-      case COMMAND_CUSTOM:
-        String arg = args.getString(0);
-        customMethod(arg);
-        break;
       default: {}
     }
   }
@@ -104,24 +101,19 @@ public class VisioMapView extends ViewGroupManager<FrameLayout> {
     }
   }
 
-  @ReactProp(name = "hash")
+  @ReactProp(name = "mapHash")
   public void setMapHash(FrameLayout view, String value) {
     propMapHash = value;
   }
 
-  @ReactProp(name = "path")
+  @ReactProp(name = "mapPath")
   public void setMapPath(FrameLayout view, String value) {
     propMapPath = value;
   }
 
-  @ReactProp(name = "secret")
+  @ReactProp(name = "mapSecret")
   public void setMapSecret(FrameLayout view, int value) {
     propSecret = value;
-  }
-
-  @ReactMethod
-  public void customMethod(String message) {
-    Log.d("VisioMapViewManager", message);
   }
 
   /**
@@ -131,7 +123,7 @@ public class VisioMapView extends ViewGroupManager<FrameLayout> {
     ViewGroup parentView = (ViewGroup) root.findViewById(reactNativeViewId);
     setupLayout(parentView);
 
-    Log.d("VisioMapView", "====> CALLED");
+    Log.d("VisioMapViewManager", "====> CALLED");
     final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret);
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
     activity.getSupportFragmentManager()

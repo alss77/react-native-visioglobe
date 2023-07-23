@@ -1,18 +1,26 @@
 package com.reactnativevisioglobe;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 
 // replace with your view's import
 import com.visioglobe.visiomoveessential.VMEMapController;
 import com.visioglobe.visiomoveessential.VMEMapControllerBuilder;
 import com.visioglobe.visiomoveessential.VMEMapView;
+import com.visioglobe.visiomoveessential.callbacks.VMEComputeRouteCallback;
+import com.visioglobe.visiomoveessential.enums.VMERouteDestinationsOrder;
+import com.visioglobe.visiomoveessential.enums.VMERouteRequestType;
 import com.visioglobe.visiomoveessential.listeners.VMELifeCycleListener;
+import com.visioglobe.visiomoveessential.models.VMERouteRequest;
+import com.visioglobe.visiomoveessential.models.VMERouteResult;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -20,6 +28,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import kotlin.jvm.internal.Intrinsics;
 
@@ -34,6 +45,8 @@ public class VisioFragment extends Fragment {
   private String mMapHash;
   private String mMapPath;
   private int mMapSecret;
+
+  private Boolean routingEnabled = false;
 
   public VisioFragment(String hash, String path, int secret) {
     this.mMapHash = hash;
@@ -125,6 +138,77 @@ public class VisioFragment extends Fragment {
       super.mapDidGainFocus();
     }
   });
+
+  Random rand = new Random();
+
+  // Method to generate a random color
+  @ColorInt
+  public int randomColor() {
+    return Color.argb(255, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+  }
+
+
+  public void customFunctionToCall() {
+    Log.d("REF", "====> CUSTOM FUNCTION FROM FRAGMENT");
+
+  }
+
+  public void setPois(String data) {
+    Log.d("REF", "====> SET POIS FROM FRAGMENT");
+    mMapController.setPois(data);
+  }
+
+  public void setPoisColor(ArrayList<String> poiIDs) {
+    Log.d("REF", "====> SET POIS COLORS FROM FRAGMENT");
+    int randomColor = randomColor();
+    HashMap<String, Integer> poiToColor = new HashMap<String, Integer>();
+
+    for (String poiID : poiIDs) {
+      poiToColor.put(poiID, randomColor);
+    }
+    mMapController.setPoisColor(poiToColor);
+  }
+
+  public void resetPoisColor() {
+    Log.d("REF", "====> RESET POIS FROM FRAGMENT");
+    var lPoiIDs = mMapController.queryAllPoiIDs();
+    mMapController.resetPoisColor(lPoiIDs);
+  }
+  private VMEComputeRouteCallback mRouteCallback = new VMEComputeRouteCallback() {
+    @Override
+    public boolean computeRouteDidFinish(VMERouteRequest routeRequest, VMERouteResult routeResult) {
+      String lRouteDescription = String.format(
+        "computeRouteDidFinish, duration: %.0fmins and length: %.0fm",
+        routeResult.getDuration() / 60,
+        routeResult.getLength()
+      );
+      Log.i(TAG, lRouteDescription);
+      routingEnabled = true;
+      return true;
+    }
+
+    @Override
+    public void computeRouteDidFail(VMERouteRequest routeRequest, String error) {
+      String lRouteDescription = String.format("computeRouteDidFail, Error: %s", error);
+      Log.i(TAG, lRouteDescription);
+      routingEnabled = false;
+    }
+  };
+
+
+  public void computeRoute(String origin, ArrayList<String> destinations, Boolean optimize) {
+    VMERouteDestinationsOrder destinationsOrder = optimize ? VMERouteDestinationsOrder.OPTIMAL : VMERouteDestinationsOrder.IN_ORDER;
+    VMERouteRequest routeRequest = new VMERouteRequest(VMERouteRequestType.FASTEST, destinationsOrder);
+    routeRequest.setOrigin(origin);
+    routeRequest.addDestinations(destinations);
+    Log.d("REF", "====> COMPUTE ROUTE FROM FRAGMENT");
+    mMapController.computeRoute(routeRequest, mRouteCallback);
+  }
+
+  public void getPoiPosition(String poi) {
+    Log.d("REF", "====> COMPUTE ROUTE FROM FRAGMENT");
+    mMapController.getPoiPosition(poi);
+  }
 
   private final String extractFromAssetsAndGetFilePath() {
     StringBuilder var10002 = new StringBuilder();

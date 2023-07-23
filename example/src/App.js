@@ -8,79 +8,82 @@ import {
   PixelRatio,
   Dimensions,
   Platform,
-  UIManager,
-  findNodeHandle,
 } from 'react-native';
-// import { MapView } from './CustomView';
 import VisioMapView from 'react-native-visioglobe';
-
-// import { VisioMapView } from 'react-native-visioglobe';
-
-const createFragment = (viewId) =>
-  UIManager.dispatchViewManagerCommand(
-    viewId,
-    // we are calling the 'create' command
-    UIManager.VisioMapView.Commands.create.toString(),
-    [viewId]
-  );
 
 export default function App() {
   const ref = React.useRef(null);
 
-  const customMethod = (message) => {
-    console.debug(ref.current);
+  const customMethod = () => {
     ref.current.customFunctionToCall();
-    // do something
   };
 
-  React.useEffect(() => {
-    console.debug('VisioMapView:', VisioMapView);
-    if (Platform.OS === 'android') {
-      const viewId = findNodeHandle(ref.current);
-      console.debug('======> VIEW ID:', viewId);
-      createFragment(viewId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const setPois = () => {
+    // do something
+    const greenCatData =
+      ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","feature":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","color":"","scale":15.0,"altitudeMode":"absolute"}}}} ';
+    ref.current.setPois(greenCatData);
+  };
+
+  const resetPoisColor = () => {
+    // do something
+    ref.current.resetPoisColor();
+  };
+
+  const setPoisColor = () => {
+    // do something
+    const data = ['B1-UL0-001', 'B1-UL0-002', 'B1-UL0-003'];
+    ref.current.setPoisColor(data);
+  };
+
+  const computeRoute = () => {
+    // do something
+    const origin = 'B2-UL01-ID0002';
+    const destination = ['B3-UL01-ID0022', 'B2-UL01-ID0081'];
+    ref.current.computeRoute(origin, destination);
+  };
 
   return (
     <>
+      <VisioMapView
+        style={{
+          // converts dpi to px, provide desired height
+          height:
+            Platform.OS === 'ios'
+              ? 400
+              : PixelRatio.getPixelSizeForLayoutSize(150),
+          // converts dpi to px, provide desired width
+          width:
+            Platform.OS === 'ios'
+              ? Dimensions.get('window').width
+              : PixelRatio.getPixelSizeForLayoutSize(
+                  Dimensions.get('window').width
+                ),
+        }}
+        // hash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
+        mapHash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
+        mapPath="path"
+        mapSecret={0}
+        ref={ref}
+      />
       <View style={styles.container}>
-        <VisioMapView
-          style={{
-            // converts dpi to px, provide desired height
-            height:
-              Platform.os === 'ios'
-                ? 200
-                : PixelRatio.getPixelSizeForLayoutSize(300),
-            // converts dpi to px, provide desired width
-            width:
-              Platform.os === 'ios'
-                ? 100
-                : PixelRatio.getPixelSizeForLayoutSize(
-                    Dimensions.get('window').width
-                  ),
-          }}
-          // hash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
-          mapHash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
-          mapPath="path"
-          mapSecret={0}
-          ref={ref}
-        />
-        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Set Map Hash</Text>
+        {/* <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
+          <Text style={styles.text}>Custom Method</Text>
+        </TouchableOpacity> */}
+        <TouchableOpacity style={styles.button} onPress={() => computeRoute()}>
+          <Text style={styles.text}>Compute Route</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Set Map Hash</Text>
+        <TouchableOpacity style={styles.button} onPress={() => setPois()}>
+          <Text style={styles.text}>Set Pois</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Set Map Hash</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => resetPoisColor()}
+        >
+          <Text style={styles.text}>Reset Pois Color</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Set Map Hash</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Set Map Hash</Text>
+        <TouchableOpacity style={styles.button} onPress={() => setPoisColor()}>
+          <Text style={styles.text}>Set Pois Color</Text>
         </TouchableOpacity>
       </View>
     </>
@@ -90,8 +93,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   box: {
     width: 60,
