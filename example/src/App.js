@@ -15,7 +15,9 @@ export default function App() {
   const ref = React.useRef(null);
 
   const customMethod = () => {
-    ref.current.customFunctionToCall();
+    if (ref.current) {
+      ref.current.setPoisColor();
+    }
   };
 
   const setPois = () => {

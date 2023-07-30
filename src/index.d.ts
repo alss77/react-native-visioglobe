@@ -9,7 +9,7 @@ export type VMEMapViewRef = {
   computeRoute: (
     origin: string,
     destinations: Array<string>,
-    optimize: Boolean?
+    optimize: Boolean | undefined
   ) => void;
   getPoiPosition: (poiID: string) => void;
 };

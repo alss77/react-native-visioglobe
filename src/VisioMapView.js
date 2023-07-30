@@ -1,15 +1,11 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import {
-  requireNativeComponent,
   NativeModules,
   findNodeHandle,
   Platform,
   UIManager,
 } from 'react-native';
-
-const MapView = requireNativeComponent(
-  Platform.OS === 'android' ? 'VisioMapViewManager' : 'VisioMapView'
-);
+import MapView, { Commands } from './VisioMapViewNativeComponent';
 
 const MODULE =
   Platform.OS === 'android' ? 'VisioglobeModule' : 'VisioMapViewManager';
@@ -30,28 +26,23 @@ export const VisioMapView = forwardRef((props, ref) => {
   };
 
   const _setPois = (data) => {
-    NativeModules[MODULE].setPois(findNodeHandle(r.current), data);
+    Commands.setPois(r.current, data);
   };
 
   const _resetPoisColor = () => {
-    NativeModules[MODULE].resetPoisColor(findNodeHandle(r.current));
+    Commands.resetPoisColor(r.current);
   };
 
   const _setPoisColor = (poiIDs) => {
-    NativeModules[MODULE].setPoisColor(findNodeHandle(r.current), poiIDs);
+    Commands.setPoisColor(r.current, poiIDs);
   };
 
   const _computeRoute = (origin, destination, optimize = false) => {
-    NativeModules[MODULE].computeRoute(
-      findNodeHandle(r.current),
-      origin,
-      destination,
-      optimize
-    );
+    Commands.computeRoute(r.current, origin, destination, optimize);
   };
 
   const _getPoiPosition = (poiID) => {
-    NativeModules[MODULE]._getPoiPosition(findNodeHandle(r.current), poiID);
+    Commands.getPoiPosition(r.current, poiID);
   };
 
   useImperativeHandle(ref, () => ({
@@ -60,7 +51,7 @@ export const VisioMapView = forwardRef((props, ref) => {
     resetPoisColor: _resetPoisColor,
     setPoisColor: _setPoisColor,
     computeRoute: _computeRoute,
-    _getPoiPosition: _getPoiPosition,
+    getPoiPosition: _getPoiPosition,
   }));
 
   React.useEffect(() => {

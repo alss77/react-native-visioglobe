@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
@@ -21,6 +22,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +30,13 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
 
   public static final String REACT_CLASS = "VisioMapViewManager";
   public final int COMMAND_CREATE = 1;
-  public final int COMMAND_CUSTOM = 2;
+  public final int COMMAND_SET_POIS = 2;
+  public final int COMMAND_RESET_POIS_COLOR = 3;
+  public final int COMMAND_SET_POIS_COLOR = 4;
+  public final int COMMAND_COMPUTE_ROUTE = 5;
+  public final int COMMAND_GET_POI_POSITION = 6;
+
+  private int reactNativeViewId;
   private int propWidth;
   private int propHeight;
 
@@ -64,7 +72,11 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   public Map<String, Integer> getCommandsMap() {
     Map<String, Integer> commands = new HashMap<>();
     commands.put("create", COMMAND_CREATE);
-    commands.put("customMethod", COMMAND_CUSTOM);
+    commands.put("setPois", COMMAND_SET_POIS);
+    commands.put("resetPoisColor", COMMAND_RESET_POIS_COLOR);
+    commands.put("setPoisColor", COMMAND_SET_POIS_COLOR);
+    commands.put("computeRoute", COMMAND_COMPUTE_ROUTE);
+    commands.put("getPoiPosition", COMMAND_GET_POI_POSITION);
     return commands;
   }
 
@@ -77,14 +89,55 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     String commandId,
     @Nullable ReadableArray args
   ) {
+    Log.d("COMMAND", "NEW COMMAND RECEIVED");
+    Log.d("COMMAND", commandId);
+    Log.d("COMMAND", String.valueOf(args));
     super.receiveCommand(root, commandId, args);
-    int reactNativeViewId = args.getInt(0);
-    int commandIdInt = Integer.parseInt(commandId);
+    // int commandIdInt = Integer.parseInt(commandId);
 
-    Log.d("COMMAND", String.valueOf(commandIdInt));
-    switch (commandIdInt) {
-      case COMMAND_CREATE:
+    final ReactApplicationContext context = reactContext;
+
+    FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
+    VisioFragment myFragment = (VisioFragment) activity.getSupportFragmentManager().findFragmentById(reactNativeViewId);
+    switch (commandId) {
+      case "1":
+        reactNativeViewId = args.getInt(0);
         createFragment(root, reactNativeViewId);
+        break;
+      case "setPois":
+        String data = args.getString(0);
+        myFragment.setPois(data);
+        break;
+      case "setPoisColor":
+        ReadableArray poiIDs = args.getArray(0);
+        ArrayList<String> poiIDList = new ArrayList<String>();
+
+        for (int i = 0; i < poiIDs.size(); i++) {
+          if (poiIDs.getType(i) == ReadableType.String) {
+            poiIDList.add(poiIDs.getString(i));
+          }
+        }
+        myFragment.setPoisColor(poiIDList);
+        break;
+      case "resetPoisColor":
+        myFragment.resetPoisColor();
+        break;
+      case "computeRoute":
+        String origin = args.getString(0);
+        Boolean optimize = args.getBoolean(2);
+        ReadableArray destinations = args.getArray(1);
+        ArrayList<String> destinationList = new ArrayList<String>();
+
+        for (int i = 0; i < destinations.size(); i++) {
+          if (destinations.getType(i) == ReadableType.String) {
+            destinationList.add(destinations.getString(i));
+          }
+        }
+        myFragment.computeRoute(origin, destinationList, optimize);
+        break;
+      case "getPoiPosition":
+        String poi = args.getString(0);
+        myFragment.getPoiPosition(poi);
         break;
       default: {}
     }
