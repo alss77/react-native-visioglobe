@@ -37,8 +37,8 @@ export const VisioMapView = forwardRef((props, ref) => {
     Commands.setPoisColor(r.current, poiIDs);
   };
 
-  const _computeRoute = (origin, destination, optimize = false) => {
-    Commands.computeRoute(r.current, origin, destination, optimize);
+  const _computeRoute = (origin, destination) => {
+    Commands.computeRoute(r.current, origin, destination);
   };
 
   const _getPoiPosition = (poiID) => {

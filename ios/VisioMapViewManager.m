@@ -21,8 +21,7 @@ RCT_EXTERN_METHOD(setPoisColor: (nonnull NSNumber *) reactTag
 RCT_EXTERN_METHOD(resetPoisColor: (nonnull NSNumber *) reactTag)
 RCT_EXTERN_METHOD(computeRoute: (nonnull NSNumber *) reactTag
                   origin: (nonnull NSString *) origin
-                  destinations: (nonnull NSArray<NSString *> *) destinations
-                  optimize: (nonnull NSNumber *) optimize)
+                  destinations: (nonnull NSArray<NSString *> *) destinations)
 @end
 
 

@@ -25,8 +25,7 @@ interface NativeCommands {
   computeRoute: (
     viewRef: React.ElementRef<NativeComponentType>,
     origin: string,
-    destinations: Array<string>,
-    optimize: Boolean | undefined
+    destinations: Array<string>
   ) => void;
   getPoiPosition: (
     viewRef: React.ElementRef<NativeComponentType>,

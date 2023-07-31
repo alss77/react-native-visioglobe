@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import VisioMoveEssential
+import React
 
 @objc(VisioMapViewManager)
 class VisioMapViewManager: RCTViewManager {
@@ -73,23 +74,22 @@ class VisioMapViewManager: RCTViewManager {
     }
     
     @objc
-    func computeRoute(_ reactTag: NSNumber, origin: NSString, destinations: [NSString], optimize: NSNumber?) {
+    func computeRoute(_ reactTag: NSNumber, origin: NSString, destinations: [NSString]) {
         print("=====> COMPUTE ROUTE FROM VIEW MANAGER")
         let lDestinations = destinations.map { $0 as String }
-        let boolOptimize = optimize?.boolValue ?? false
         DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
-                view.computeRoute(String(origin), lDestinations: lDestinations, optimize: boolOptimize)
+                // view.computeRoute(String(origin), lDestinations: lDestinations)
             }
         }
     }
     
-  override static func requiresMainQueueSetup() -> Bool {
+  /* override static func requiresMainQueueSetup() -> Bool {
     return true
-  }
+  } */
 }
 
-class VisioMapView: UIView, VMELifeCycleListener, VMEComputeRouteCallback {
+class VisioMapView: UIView, VMELifeCycleListener {
     var mMapController: VMEMapController!
     var mMapView: VMEMapView!  // assuming VMEMapView is the correct type
     let label: UILabel = UILabel()
@@ -147,6 +147,7 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEComputeRouteCallback {
     }
     
     // MARK: - VMEComputeRouteCallback
+    /* @objc
     func computeRouteDidFinish(mapController: VMEMapController, parameters routeRequest: VMERouteRequest, result routeResult: VMERouteResult) -> Bool {
         print(String(format: "computeRouteDidFinish duration: %.0fmins and length: %.0fm ", (routeResult.duration) / 60, routeResult.length))
         return true
@@ -157,16 +158,15 @@ class VisioMapView: UIView, VMELifeCycleListener, VMEComputeRouteCallback {
     }
     
     
-    func computeRoute(_ origin: String, lDestinations: [String], optimize: Bool?) {
+    func computeRoute(_ origin: String, lDestinations: [String]) {
         print("=====> COMPUTE ROUTE")
-        let optimizeUnwrapped = optimize ?? false // If optimize is nil, false will be used.
-        let lDestOrder = optimizeUnwrapped ? VMERouteDestinationsOrder.optimal : VMERouteDestinationsOrder.inOrder
+        let lDestOrder = VMERouteDestinationsOrder.inOrder
         let lRouteRequest = VMERouteRequest(requestType: VMERouteRequestType.fastest, destinationsOrder: lDestOrder)
         lRouteRequest.setOrigin(origin)
         if (lRouteRequest.addDestinations(lDestinations)) {
             mMapController.computeRoute(lRouteRequest, callback: self)
         }
-    }
+    } */
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

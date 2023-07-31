@@ -6,11 +6,7 @@ export type VMEMapViewRef = {
   setPois: (data: string) => void;
   resetPoisColor: () => void;
   setPoisColor: (poiIDs: Array<string>) => void;
-  computeRoute: (
-    origin: string,
-    destinations: Array<string>,
-    optimize: Boolean | undefined
-  ) => void;
+  computeRoute: (origin: string, destinations: Array<string>) => void;
   getPoiPosition: (poiID: string) => void;
 };
 
