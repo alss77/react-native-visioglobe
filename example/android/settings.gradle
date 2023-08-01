@@ -8,3 +8,4 @@ project(':visio-sdk').projectDir = new File(rootProject.projectDir, '../../andro
 
 include ':reactnativevisioglobe'
 project(':reactnativevisioglobe').projectDir = new File(rootProject.projectDir, '../../android')
+includeBuild('../node_modules/@react-native/gradle-plugin')

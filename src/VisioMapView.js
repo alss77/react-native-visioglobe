@@ -60,7 +60,6 @@ export const VisioMapView = forwardRef((props, ref) => {
       console.debug('======> VIEW ID FROM MODULE:', viewId);
       createFragment(viewId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
