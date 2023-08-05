@@ -23,6 +23,3 @@ RCT_EXTERN_METHOD(computeRoute: (nonnull NSNumber *) reactTag
                   origin: (nonnull NSString *) origin
                   destinations: (nonnull NSArray<NSString *> *) destinations)
 @end
-
-
-
