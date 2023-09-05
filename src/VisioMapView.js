@@ -45,6 +45,54 @@ export const VisioMapView = forwardRef((props, ref) => {
     Commands.getPoiPosition(r.current, poiID);
   };
 
+  const _setSelectorViewVisible = (visible) => {
+    Commands.setSelectorViewVisible(r.current, visible);
+  };
+
+  const _getVersion = () => {
+    let requestId = this._nextRequestId++;
+    let requestMap = this._requestMap;
+    let promise = new Promise(function (resolve, reject) {
+      requestMap[requestId] = { resolve: resolve, reject: reject };
+    });
+    Commands.getVersion(r.current, requestId);
+
+    /**promise.then((value) => {
+      console.log(value);
+    });
+    **/
+    return (promise);
+  };
+
+  /// EN COURS
+  _nextRequestId = 1;
+
+  _requestMap = new Map();
+
+  _onDataReturned = (event) => {
+    let { requestId, result, error } = event.nativeEvent
+    let promise = this._requestMap[requestId]
+    if (result) {
+      // If it was successful, we resolve the promise.
+      promise.resolve(result)
+    } else {
+      // Otherwise, we reject it.
+      promise.reject(error)
+    }
+    // Finally, we clean up our request map.
+    this._requestMap.delete(requestId)
+  }
+
+////
+
+  /*const _getDataSDKVersion = () => {
+    Commands.getDataSDKVersion(r.current);
+  }*/
+
+  const _getMinDataSDKVersion = () =>{
+    Commands.getMinDataSDKVersion(r.current);
+  };
+
   useImperativeHandle(ref, () => ({
     customFunctionToCall: _customFunctionToCall,
     setPois: _setPois,
@@ -52,6 +100,10 @@ export const VisioMapView = forwardRef((props, ref) => {
     setPoisColor: _setPoisColor,
     computeRoute: _computeRoute,
     getPoiPosition: _getPoiPosition,
+    setSelectorViewVisible: _setSelectorViewVisible,
+    getVersion: _getVersion, 
+    //getDataSDKVersion: _getDataSDKVersion, 
+    getMinDataSDKVersion: _getMinDataSDKVersion,
   }));
 
   React.useEffect(() => {
@@ -65,6 +117,9 @@ export const VisioMapView = forwardRef((props, ref) => {
   return (
     <MapView
       ref={r}
+      ///EN COURS
+      onDataReturned={this._onDataReturned}
+      ///
       style={{ ...props.style }}
       mapHash={props.mapHash}
       mapPath={props.mapPath}

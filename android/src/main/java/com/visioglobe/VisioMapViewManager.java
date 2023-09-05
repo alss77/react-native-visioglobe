@@ -1,5 +1,6 @@
 package com.visioglobe;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
@@ -8,12 +9,14 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
@@ -21,10 +24,12 @@ import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.events.EventDispatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
 
@@ -35,6 +40,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   public final int COMMAND_SET_POIS_COLOR = 4;
   public final int COMMAND_COMPUTE_ROUTE = 5;
   public final int COMMAND_GET_POI_POSITION = 6;
+  public final int COMMAND_GET_VERSION = 7;
 
   private int reactNativeViewId;
   private int propWidth;
@@ -43,7 +49,6 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   private String propMapHash;
   private String propMapPath;
   private int propSecret;
-
 
   ReactApplicationContext reactContext;
 
@@ -77,12 +82,19 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     commands.put("setPoisColor", COMMAND_SET_POIS_COLOR);
     commands.put("computeRoute", COMMAND_COMPUTE_ROUTE);
     commands.put("getPoiPosition", COMMAND_GET_POI_POSITION);
+    commands.put("getVersion", COMMAND_GET_VERSION);
     return commands;
   }
 
+  @Nullable
+  @Override
+  public Map getExportedCustomDirectEventTypeConstants() {
+    return MapBuilder.of(VisioDataReturnedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onDataReturned"));
+  }
   /**
    * Handle "create" command (called from JS) and call createFragment method
    */
+  @RequiresApi(api = Build.VERSION_CODES.N)
   @Override
   public void receiveCommand(
     @NonNull FrameLayout root,
@@ -98,6 +110,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     final ReactApplicationContext context = reactContext;
 
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
+    EventDispatcher eventDispatcher = (EventDispatcher) context.getNativeModule(UIManagerModule.class).getEventDispatcher();
     VisioFragment myFragment = (VisioFragment) activity.getSupportFragmentManager().findFragmentById(reactNativeViewId);
     switch (commandId) {
       case "1":
@@ -139,6 +152,18 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
         String poi = args.getString(0);
         myFragment.getPoiPosition(poi);
         break;
+      case "setSelectorViewVisible":
+        boolean visible = args.getBoolean(0);
+        myFragment.setSelectorViewVisible(visible);
+        break;
+      case "getVersion":
+        Integer requestId = args.getInt(0);
+        String version = myFragment.getVersion();
+        eventDispatcher.dispatchEvent(new VisioDataReturnedEvent(reactNativeViewId, requestId, version));
+        break;
+      case "getMinDataSDKVersion":
+        myFragment.getMinDataSDKVersion();
+        break;
       default: {}
     }
   }
@@ -174,10 +199,11 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
    */
   public void createFragment(FrameLayout root, int reactNativeViewId) {
     ViewGroup parentView = (ViewGroup) root.findViewById(reactNativeViewId);
+
     setupLayout(parentView);
 
     Log.d("VisioMapViewManager", "====> CALLED");
-    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret);
+    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret, propWidth, propHeight);
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
     activity.getSupportFragmentManager()
       .beginTransaction()
@@ -208,6 +234,8 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
       View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
       View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
 
+
     view.layout(0, 0, width, height);
+
   }
 }

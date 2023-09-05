@@ -1,5 +1,6 @@
 import type { ViewProps, HostComponent } from 'react-native';
 import { Platform } from 'react-native';
+import './VisioTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 
@@ -31,6 +32,20 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     poiID: string
   ) => void;
+  setSelectorViewVisible: (
+    viewRef: React.ElementRef<NativeComponentType>, 
+    visible: boolean
+    ) => void;
+
+    getVersion: (
+      viewRef: React.ElementRef<NativeComponentType>, requestId: string
+      ) => Promise<string>;
+    
+    //getDataSDKVersion: (viewRef: React.ElementRef<NativeComponentType>) => string;
+    
+    getMinDataSDKVersion: (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => string;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
@@ -40,6 +55,10 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'computeRoute',
     'setPoisColor',
     'getPoiPosition',
+    'setSelectorViewVisible',
+    'getVersion',
+    //'getDataSDKVersion', 
+    'getMinDataSDKVersion',
   ],
 });
 
