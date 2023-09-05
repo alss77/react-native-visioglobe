@@ -14,6 +14,8 @@ import VisioMapView from 'react-native-visioglobe';
 export default function App() {
   const ref = React.useRef(null);
 
+  var boolean = false;
+
   const customMethod = () => {
     if (ref.current) {
       ref.current.setPoisColor();
@@ -45,15 +47,24 @@ export default function App() {
     ref.current.computeRoute(origin, destination);
   };
 
+  const setSelectorViewVisible = () => {
+    ref.current.setSelectorViewVisible(boolean);
+    boolean = !boolean;
+  }
+
+  const getVersion = () => {
+    ref.current.getVersion();
+  }
+
   return (
     <>
-      <VisioMapView
+    <VisioMapView
         style={{
           // converts dpi to px, provide desired height
           height:
             Platform.OS === 'ios'
               ? 400
-              : PixelRatio.getPixelSizeForLayoutSize(150),
+              : 400,
           // converts dpi to px, provide desired width
           width:
             Platform.OS === 'ios'
@@ -61,6 +72,7 @@ export default function App() {
               : PixelRatio.getPixelSizeForLayoutSize(
                   Dimensions.get('window').width
                 ),
+                backgroundColor: 'red',
         }}
         // hash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
         mapHash="dev-c346e782b88c53bb6c891f439dbcc7e2cde0aaab"
@@ -72,8 +84,8 @@ export default function App() {
         {/* <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
           <Text style={styles.text}>Custom Method</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity style={styles.button} onPress={() => computeRoute()}>
-          <Text style={styles.text}>Compute Route</Text>
+        <TouchableOpacity style={styles.button} onPress={() => getVersion()}>
+          <Text style={styles.text}>Log Version</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => setPois()}>
           <Text style={styles.text}>Set Pois</Text>
@@ -88,13 +100,13 @@ export default function App() {
           <Text style={styles.text}>Set Pois Color</Text>
         </TouchableOpacity>
       </View>
-    </>
+      </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: 'yellow',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
