@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,20 +14,62 @@ import VisioMapView from 'react-native-visioglobe';
 export default function App() {
   const ref = React.useRef(null);
 
+
+  ///////////////////////// Activate and deactivate selector view /////////////////////////
   var boolean = false;
 
+  const [textSetSelectorViewButton,setSelectorViewText] = useState("Stop Selector View"); 
+
+  const onPressSetSelectorView = () => {
+    if (boolean === false){
+      setSelectorViewText("Use Selector View");
+    } else {
+      setSelectorViewText("Stop Selector View");
+    }
+  }
+
+  const setSelectorViewVisible = () => {
+    onPressSetSelectorView();
+    ref.current.setSelectorViewVisible(boolean);
+    boolean = !boolean;
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  ///////////////////////// Button text for setPois /////////////////////////////////////
+  const [textSetPoisButton,setPoisText] = useState("Set cat POIs"); 
+
+  const onPressSetPois = () => {
+    if (textSetPoisButton === "Set cat POIs"){
+      setPoisText("Remove cat POIs");
+    } else {
+      setPoisText("Set cat POIs");
+    }
+  }
+
+  const setPois = () => {
+    // do something
+    const greenCatData =
+    ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","features":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","scale":15.0,"altitudeMode":"absolute"}}}} ';
+    onPressSetPois();
+    if (textSetPoisButton === "Set cat POIs"){
+      ref.current.setPois(greenCatData);
+    } else {
+      //removePoi native method
+    }
+  };
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  
+
+  ////////////////////////////// Test Method /////////////////////////////////////////
   const customMethod = () => {
     if (ref.current) {
       ref.current.setPoisColor();
     }
   };
-
-  const setPois = () => {
-    // do something
-    const greenCatData =
-      ' {"catCringe":{"name":"Black cat","icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","description":"Black cat is here","feature":{"image":{"icon":"https://upload.wikimedia.org/wikipedia/commons/4/4f/Kitty_emoji.png","position":[45.74131,4.88216,0.0],"anchorMode":"bottomCenter","color":"","scale":15.0,"altitudeMode":"absolute"}}}} ';
-    ref.current.setPois(greenCatData);
-  };
+  ////////////////////////////////////////////////////////////////////////////////////
 
   const resetPoisColor = () => {
     // do something
@@ -47,13 +89,8 @@ export default function App() {
     ref.current.computeRoute(origin, destination);
   };
 
-  const setSelectorViewVisible = () => {
-    ref.current.setSelectorViewVisible(boolean);
-    boolean = !boolean;
-  }
-
   const getVersion = () => {
-    ref.current.getVersion();
+    alert(ref.current.getVersion());
   }
 
   return (
@@ -80,24 +117,39 @@ export default function App() {
         mapSecret={0}
         ref={ref}
       />
-      <View style={styles.container}>
-        {/* <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
-          <Text style={styles.text}>Custom Method</Text>
-        </TouchableOpacity> */}
+      <View style={[styles.container, {
+      flexDirection: "row"
+    }]}>
         <TouchableOpacity style={styles.button} onPress={() => getVersion()}>
-          <Text style={styles.text}>Log Version</Text>
+          <Text style={styles.text}>Display SDK Version</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => setPois()}>
-          <Text style={styles.text}>Set Pois</Text>
+          <Text style={styles.text}> {textSetPoisButton}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => resetPoisColor()}
+          onPress={() => setSelectorViewVisible(boolean)}
         >
-          <Text style={styles.text}>Reset Pois Color</Text>
+          <Text style={styles.text}>{textSetSelectorViewButton}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => setPoisColor()}>
-          <Text style={styles.text}>Set Pois Color</Text>
+        </View>
+      <View style={[styles.container, {
+      flexDirection: "row"
+    }]}>
+        <TouchableOpacity style={styles.button} onPress={() => customMethod()}>
+          <Text style={styles.text}>TO DO </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => customMethod()}
+        >
+          <Text style={styles.text}>TO DO </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => customMethod()}
+        >
+          <Text style={styles.text}>TO DO</Text>
         </TouchableOpacity>
       </View>
       </>
@@ -106,8 +158,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
-    // alignItems: 'center',
+    display: 'flex',
+    backgroundColor: 'green',
+    alignItems: 'center',
     // justifyContent: 'center',
   },
   box: {
@@ -116,9 +169,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   button: {
+    width: "23%",
     padding: 20,
     borderRadius: 10,
-    marginBottom: 5,
+    margin: '4%',
     backgroundColor: 'blue',
   },
   closeButton: {
