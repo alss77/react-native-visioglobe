@@ -84,6 +84,24 @@ class VisioMapViewManager: RCTViewManager {
         }
     }
     
+    @objc
+    func getVersion(_ reactTag: NSNumber,
+                    resolver: @escaping RCTPromiseResolveBlock,
+                    rejecter: @escaping RCTPromiseRejectBlock){
+        DispatchQueue.main.async {
+            if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
+                let version = view.getVersion()
+                print("cc2")
+                if !version.isEmpty {
+                    resolver(version)
+                } else {
+                    rejecter("error", "Failed to get version in iOS", nil)
+                }
+            }
+        }
+    }
+
+    
   /* override static func requiresMainQueueSetup() -> Bool {
     return true
   } */
@@ -126,7 +144,7 @@ class VisioMapView: UIView, VMELifeCycleListener {
     
     
     func setPois(_ data: String) {
-        var result = mMapController.setPois(data: data);
+        let result = mMapController.setPois(data: data);
         print("=====> SET POIS RESULT")
         print(result)
     }
@@ -144,6 +162,13 @@ class VisioMapView: UIView, VMELifeCycleListener {
         let result = mMapController.resetPoisColor(poiIDs: lPoiIDs);
         print("=====> RESET POIS COLOR RESULT")
         print(result)
+    }
+
+    func getVersion() -> String {
+        print("cc1")
+        let lVersion = mMapController.getDataSDKVersion();
+        print("=====> GET DATA SDK VERSION")
+        return(lVersion)
     }
     
     // MARK: - VMEComputeRouteCallback

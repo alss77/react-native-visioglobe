@@ -22,4 +22,8 @@ RCT_EXTERN_METHOD(resetPoisColor: (nonnull NSNumber *) reactTag)
 RCT_EXTERN_METHOD(computeRoute: (nonnull NSNumber *) reactTag
                   origin: (nonnull NSString *) origin
                   destinations: (nonnull NSArray<NSString *> *) destinations)
+RCT_EXTERN_METHOD(getVersion: (nonnull NSNumber *) reactTag
+                  resolver: (RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(customFunctionToCall: () reactTag)
 @end

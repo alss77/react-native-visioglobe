@@ -14,6 +14,7 @@ export interface NativeProps extends ViewProps {
 type NativeComponentType = HostComponent<NativeProps>;
 
 interface NativeCommands {
+  //OK ANDROID & iOS
   setPois: (
     viewRef: React.ElementRef<NativeComponentType>,
     data: string
@@ -23,6 +24,7 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     poiIDs: Array<string>
   ) => void;
+  //ComputeROute to update
   computeRoute: (
     viewRef: React.ElementRef<NativeComponentType>,
     origin: string,
@@ -37,6 +39,7 @@ interface NativeCommands {
     visible: boolean
     ) => void;
 
+    //OK ANDROID
     getVersion: (
       viewRef: React.ElementRef<NativeComponentType>, requestId: string
       ) => Promise<string>;
@@ -46,6 +49,50 @@ interface NativeCommands {
     getMinDataSDKVersion: (
       viewRef: React.ElementRef<NativeComponentType>
       ) => string;
+
+    /**
+    setBuildingListener: (VMEBuildingListener) => void;
+    setCameraListener: (VMECameraListener) => void;
+    setLocationTrackingModeListener : (VMELocationTrackingModeListener) => void;
+    setPoiListener: (VMEPoiListener) => void;
+    setMapListener: (VMEMapListener) => void;
+    animateCamera: (VMECameraUpdate, duration: Double, callback: VMEAnimationCallback?) => void;
+    getCameraContext: () => VMECameraContext?;
+    updateCamera: (VMECameraUpdate)=> void;
+    animateScene : (VMESceneUpdate) => void;
+    updateScene : (VMESceneUpdate) => void;
+    computeRoute : (VMERouteRequest, callback: VMEComputeRouteCallback?) => void;
+    createLocationFromLocation(CLLocation) => VMELocation?;
+    createPositionFromLocation : (CLLocation) => VMEPosition?;
+    getLocationTrackingMode: () => VMELocationTrackingMode;
+    setLocationTrackingMode: (VMELocationTrackingMode);
+    getLocationTrackingButtonToggleModes: () =>[VMELocationTrackingMode];
+    setLocationTrackingButtonToggleModes: ([String]);
+    getNavigationHeaderViewVisible : () => Bool;
+    setNavigationHeaderViewVisible : (Bool);
+    getSelectorViewVisible : () => Bool;
+    setSelectorViewVisible : (Bool);
+    removePoi : (poiID: String) => Bool;
+    removePois : (poiIDs: [String]) => [Bool];
+    getCategory : (categoryID: String) => VMECategory?;
+    getPoi : (poiID: String) => VMEPoi?;
+    getPoiPosition : (poiID: String) => VMEPosition?;
+    getPoiBoundingPositions : (poiID: String) => [VMEPosition];
+    queryAllCategoryIDs : () => [String];
+    queryAllPoiIDs : () => [String];
+    queryPois : (with: VMEPoiFilter, callback: VMEPoiFilterCallback?);
+    resetPoiColor : (poiID: String) => Bool;
+    resetPoisColor : (poiIDs: [String]) => [Bool];
+    setPoiSize : (poiID: String, size: VMEPoiSize, animated: Bool) => Bool;
+    setPoisSize : (poiIDs: [String], sizes: [VMEPoiSize], animated: [Bool]) => [Bool];
+    setPoiPosition : (poiID: String, position: VMEPosition, animated: Bool) => Bool;
+    setPoisPosition : (poiIDs: [String], positions: [VMEPosition], animated: [Bool]) => [Bool];
+    setPoiColor : (String, color: UIColor) => Bool;
+    setPoisColor : (poiIDs: [String], colors: [UIColor]) => [Bool];
+    showPoiInfo : (poiID: String);
+    setCategories : (data: String) =>[String : Any];
+
+    **/
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({

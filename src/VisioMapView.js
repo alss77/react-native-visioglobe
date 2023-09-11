@@ -55,16 +55,18 @@ export const VisioMapView = forwardRef((props, ref) => {
     let promise = new Promise(function (resolve, reject) {
       requestMap[requestId] = { resolve: resolve, reject: reject };
     });
+    console.log("cc")
     Commands.getVersion(r.current, requestId);
 
     /**promise.then((value) => {
       console.log(value);
-    });
-    **/
+    });**/
     return (promise);
   };
 
   /// EN COURS
+
+  // Generate a queue for the next asked promises
   _nextRequestId = 1;
 
   _requestMap = new Map();

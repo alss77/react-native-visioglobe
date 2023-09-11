@@ -61,7 +61,7 @@ export default function App() {
   };
   ////////////////////////////////////////////////////////////////////////////////////
 
-  
+
 
   ////////////////////////////// Test Method /////////////////////////////////////////
   const customMethod = () => {
@@ -90,7 +90,11 @@ export default function App() {
   };
 
   const getVersion = () => {
-    alert(ref.current.getVersion());
+    //console.log(ref.current.getVersion());
+    let promise = ref.current.getVersion()
+    promise.then((value) => {
+      alert(value);
+    }); 
   }
 
   return (
