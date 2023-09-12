@@ -203,7 +203,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
     setupLayout(parentView);
 
     Log.d("VisioMapViewManager", "====> CALLED");
-    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret, propWidth, propHeight);
+    final VisioFragment myFragment = new VisioFragment(propMapHash, propMapPath, propSecret);
     FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
     activity.getSupportFragmentManager()
       .beginTransaction()

@@ -46,6 +46,10 @@ public class VisioFragment extends Fragment {
   private String mMapPath;
   private int mMapSecret;
 
+  private int width;
+
+  private int height;
+
   private Boolean routingEnabled = false;
 
   public VisioFragment(String hash, String path, int secret) {
@@ -58,9 +62,9 @@ public class VisioFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
     Log.d(TAG, "====> Present Visioglobe");
     Intrinsics.checkNotNullParameter(inflater, "inflater");
-    Log.d(TAG, "====> Inflater is set");
+    Log.d("TAGTAG", "====> Inflater is set" + parent.getHeight());
     if (this.mMapView == null) {
-      this.mFragment = (ViewGroup) inflater.inflate(R.layout.map_view_sample, parent, false);
+      this.mFragment = (VMEMapView) inflater.inflate(R.layout.map_view_sample, parent, false);
       VMEMapControllerBuilder builder = new VMEMapControllerBuilder();
       if (this.mFragment == null) {
         Log.d(TAG, "====> mFragment is null");
@@ -78,7 +82,7 @@ public class VisioFragment extends Fragment {
       }
 
       builder.setMapHash(mMapHash);
-      builder.setMapSecretCode(0);
+      builder.setMapSecretCode(mMapSecret);
       Context context = this.getContext();
       Intrinsics.checkNotNullExpressionValue(context, "requireContext()");
       this.mMapController = new VMEMapController(context, builder);
@@ -86,9 +90,9 @@ public class VisioFragment extends Fragment {
       Intrinsics.checkNotNull(mController);
       Log.d(TAG, "====> Set life cycle listener");
       mController.setLifeCycleListener(this.mLifeCycleListener);
-      Log.d(TAG, "====> Set life cycle listener success");
-      mController = this.mMapController;
-      Intrinsics.checkNotNull(mController);
+      //Log.d(TAG, "====> Set life cycle listener success");
+      //mController = this.mMapController;
+      //Intrinsics.checkNotNull(mController);
       Log.d(TAG, "====> Set Map View");
       VMEMapView mapView = this.mMapView;
       Intrinsics.checkNotNull(mapView);
@@ -100,7 +104,8 @@ public class VisioFragment extends Fragment {
       mController.loadMapData();
     }
 
-    return (View)this.mMapView;
+    View view = this.mMapView;
+    return view;
   }
 
   private final VMELifeCycleListener mLifeCycleListener = (VMELifeCycleListener)(new VMELifeCycleListener() {
@@ -123,11 +128,7 @@ public class VisioFragment extends Fragment {
       Log.d(TAG, "====> MAP DATA DID LOAD");
       Intrinsics.checkNotNullParameter(mapVenueInfo, "mapVenueInfo");
       super.mapDataDidLoad(mapVenueInfo);
-      VMEMapController var10000 = VisioFragment.this.mMapController;
-      Intrinsics.checkNotNull(var10000);
-      VMEMapView var10001 = VisioFragment.this.mMapView;
-      Intrinsics.checkNotNull(var10001);
-      var10000.loadMapView(var10001);
+      VisioFragment.this.mMapController.loadMapView(VisioFragment.this.mMapView);
     }
 
     public void mapViewDidLoad() {
@@ -151,6 +152,20 @@ public class VisioFragment extends Fragment {
   public void customFunctionToCall() {
     Log.d("REF", "====> CUSTOM FUNCTION FROM FRAGMENT");
 
+  }
+  public String getVersion(){
+    Log.d("REF", "====> GET VERSION ");
+    return mMapController.getDataSDKVersion();
+  }
+
+  public String getMinDataSDKVersion(){
+    Log.d("REF", "====> GET MIN VERSION ");
+    return mMapController.getMinDataSDKVersion();
+  }
+
+  public void setSelectorViewVisible(boolean visible){
+    Log.d("REF", "====> SET SELECTOR VIEW ");
+    mMapController.setSelectorViewVisible(visible);
   }
 
   public void setPois(String data) {
