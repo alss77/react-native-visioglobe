@@ -30,22 +30,28 @@ interface NativeCommands {
     origin: string,
     destinations: Array<string>
   ) => void;
+
+  //To Update
   getPoiPosition: (
     viewRef: React.ElementRef<NativeComponentType>,
     poiID: string
   ) => void;
+
+  //To Update
   setSelectorViewVisible: (
     viewRef: React.ElementRef<NativeComponentType>, 
     visible: boolean
     ) => void;
 
-    //OK ANDROID
+    //OK ANDROID Update iOs
     getVersion: (
-      viewRef: React.ElementRef<NativeComponentType>, requestId: string
+      viewRef: React.ElementRef<NativeComponentType>, 
+      requestId: string
       ) => Promise<string>;
     
     //getDataSDKVersion: (viewRef: React.ElementRef<NativeComponentType>) => string;
     
+    //TODO
     getMinDataSDKVersion: (
       viewRef: React.ElementRef<NativeComponentType>
       ) => string;
