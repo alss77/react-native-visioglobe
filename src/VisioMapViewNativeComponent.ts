@@ -19,7 +19,9 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     data: string
   ) => void;
+  //To Update
   resetPoisColor: (viewRef: React.ElementRef<NativeComponentType>) => void;
+  //To Update
   setPoisColor: (
     viewRef: React.ElementRef<NativeComponentType>,
     poiIDs: Array<string>
@@ -56,7 +58,7 @@ interface NativeCommands {
       viewRef: React.ElementRef<NativeComponentType>
       ) => string;
 
-    /**
+    /** TODO
     setBuildingListener: (VMEBuildingListener) => void;
     setCameraListener: (VMECameraListener) => void;
     setLocationTrackingModeListener : (VMELocationTrackingModeListener) => void;
@@ -109,9 +111,9 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'setPoisColor',
     'getPoiPosition',
     'setSelectorViewVisible',
-    'getVersion',
+    'getVersion',//android only
     //'getDataSDKVersion', 
-    'getMinDataSDKVersion',
+    //'getMinDataSDKVersion',
   ],
 });
 
