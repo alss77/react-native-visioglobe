@@ -64,3 +64,35 @@ export type VMPoiVisibilityRamp = {
   startVisible: number,
   ///Créer ou appeler hors de la vue de l'integrateur l'initialiser (voir doc SDK )
 }
+
+export type VMCameraUpdate = {
+
+}
+
+export type VMAnimationCallback = {
+
+}
+
+export type VMCameraContext = {
+
+}
+
+export type VMSceneUpdate = { 
+
+}
+
+export type VMLocationTrackingMode = {
+
+}
+
+export type VMCategory = { 
+
+}
+
+export type VMPoiFilter = {
+
+}
+
+export type VMPoiFilterCallback = {
+  
+}

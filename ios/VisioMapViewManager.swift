@@ -86,19 +86,19 @@ class VisioMapViewManager: RCTViewManager {
     
     @objc
     func getVersion(_ reactTag: NSNumber,
-                    resolver: @escaping RCTPromiseResolveBlock,
-                    rejecter: @escaping RCTPromiseRejectBlock){
-        DispatchQueue.main.async {
+                    resolve: @escaping RCTPromiseResolveBlock,
+                    rejecter reject: @escaping RCTPromiseRejectBlock)->Void{
+        resolve("version");
+        /**DispatchQueue.main.async {
             if let view = self.bridge.uiManager.view(forReactTag: reactTag) as? VisioMapView {
                 let version = view.getVersion()
-                print("cc2")
                 if !version.isEmpty {
-                    resolver(version)
+                    resolve(version)
                 } else {
-                    rejecter("error", "Failed to get version in iOS", nil)
+                    reject("error", "Failed to get version in iOS", nil)
                 }
             }
-        }
+        }**/
     }
 
     
@@ -165,7 +165,6 @@ class VisioMapView: UIView, VMELifeCycleListener {
     }
 
     func getVersion() -> String {
-        print("cc1")
         let lVersion = mMapController.getDataSDKVersion();
         print("=====> GET DATA SDK VERSION")
         return(lVersion)

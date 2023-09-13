@@ -3,11 +3,14 @@ import { Platform } from 'react-native';
 import './VisioTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
+import type { VMAnimationCallback, VMCameraContext, VMCameraUpdate, VMCategory, VMLocation, VMLocationTrackingMode, VMPoi, VMPoiFilter, VMPoiFilterCallback, VMPoiSize, VMPosition, VMSceneUpdate } from './VisioTypes';
 
 export interface NativeProps extends ViewProps {
   mapPath?: string;
   mapSecret?: number;
   mapHash?: string;
+  listeners?: [string];//List of listener to instantiate with the view
   // other props go here...
 }
 
@@ -19,25 +22,43 @@ interface NativeCommands {
     viewRef: React.ElementRef<NativeComponentType>,
     data: string
   ) => void;
+
   //To Update
   resetPoisColor: (viewRef: React.ElementRef<NativeComponentType>) => void;
+      /**
+     * resetPoisColor : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiIDs: [String]
+      ) => Promise<[boolean]>;
+      **/
+
   //To Update
   setPoisColor: (
     viewRef: React.ElementRef<NativeComponentType>,
     poiIDs: Array<string>
   ) => void;
+  /**
+     * setPoisColor : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiIDs: [String], 
+      colors: [String]
+      ) => Promise<[boolean]>;
+    **/
+
   //ComputeROute to update
   computeRoute: (
     viewRef: React.ElementRef<NativeComponentType>,
     origin: string,
     destinations: Array<string>
   ) => void;
+  //computeRoute : (viewRef: React.ElementRef<NativeComponentType>, routerequest: VMRouteRequest, callback: VMComputeRouteCallback?) => void;
+
 
   //To Update
   getPoiPosition: (
     viewRef: React.ElementRef<NativeComponentType>,
     poiID: string
-  ) => void;
+  ) => VMPosition;
 
   //To Update
   setSelectorViewVisible: (
@@ -59,48 +80,163 @@ interface NativeCommands {
       ) => string;
 
     /** TODO
+     * Listeners will not be exposed as function but as component props
     setBuildingListener: (VMEBuildingListener) => void;
     setCameraListener: (VMECameraListener) => void;
     setLocationTrackingModeListener : (VMELocationTrackingModeListener) => void;
     setPoiListener: (VMEPoiListener) => void;
     setMapListener: (VMEMapListener) => void;
-    animateCamera: (VMECameraUpdate, duration: Double, callback: VMEAnimationCallback?) => void;
-    getCameraContext: () => VMECameraContext?;
-    updateCamera: (VMECameraUpdate)=> void;
-    animateScene : (VMESceneUpdate) => void;
-    updateScene : (VMESceneUpdate) => void;
-    computeRoute : (VMERouteRequest, callback: VMEComputeRouteCallback?) => void;
-    createLocationFromLocation(CLLocation) => VMELocation?;
-    createPositionFromLocation : (CLLocation) => VMEPosition?;
-    getLocationTrackingMode: () => VMELocationTrackingMode;
-    setLocationTrackingMode: (VMELocationTrackingMode);
-    getLocationTrackingButtonToggleModes: () =>[VMELocationTrackingMode];
-    setLocationTrackingButtonToggleModes: ([String]);
-    getNavigationHeaderViewVisible : () => Bool;
-    setNavigationHeaderViewVisible : (Bool);
-    getSelectorViewVisible : () => Bool;
-    setSelectorViewVisible : (Bool);
-    removePoi : (poiID: String) => Bool;
-    removePois : (poiIDs: [String]) => [Bool];
-    getCategory : (categoryID: String) => VMECategory?;
-    getPoi : (poiID: String) => VMEPoi?;
-    getPoiPosition : (poiID: String) => VMEPosition?;
-    getPoiBoundingPositions : (poiID: String) => [VMEPosition];
-    queryAllCategoryIDs : () => [String];
-    queryAllPoiIDs : () => [String];
-    queryPois : (with: VMEPoiFilter, callback: VMEPoiFilterCallback?);
-    resetPoiColor : (poiID: String) => Bool;
-    resetPoisColor : (poiIDs: [String]) => [Bool];
-    setPoiSize : (poiID: String, size: VMEPoiSize, animated: Bool) => Bool;
-    setPoisSize : (poiIDs: [String], sizes: [VMEPoiSize], animated: [Bool]) => [Bool];
-    setPoiPosition : (poiID: String, position: VMEPosition, animated: Bool) => Bool;
-    setPoisPosition : (poiIDs: [String], positions: [VMEPosition], animated: [Bool]) => [Bool];
-    setPoiColor : (String, color: UIColor) => Bool;
-    setPoisColor : (poiIDs: [String], colors: [UIColor]) => [Bool];
-    showPoiInfo : (poiID: String);
-    setCategories : (data: String) =>[String : Any];
-
     **/
+
+    //TODO ALL BELOW
+    animateCamera: (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      cameraupdate: VMCameraUpdate, 
+      duration: Double, 
+      callback: VMAnimationCallback | undefined
+      ) => void;
+
+    getCameraContext: (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<VMCameraContext>;
+
+    updateCamera: (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      update: VMCameraUpdate
+      )=> void;
+
+    animateScene : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      animate: VMSceneUpdate
+      ) => void;
+
+    updateScene : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      update: VMSceneUpdate
+      ) => void;
+
+    createLocationFromLocation : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      CLLocation: any
+      ) => Promise<VMLocation>;
+
+    createPositionFromLocation : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      CLLocation: any
+      ) => Promise<VMPosition>;
+
+    
+    getLocationTrackingMode: (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<VMLocationTrackingMode>;
+
+    setLocationTrackingMode: (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      trackingmode: VMLocationTrackingMode
+      ) => void;
+
+    getLocationTrackingButtonToggleModes: (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<[VMLocationTrackingMode]>;
+
+    setLocationTrackingButtonToggleModes: (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      togglemodes: [String]
+      ) => void;
+
+    getNavigationHeaderViewVisible : (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<boolean>;
+
+    setNavigationHeaderViewVisible : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      bool: boolean
+      ) => void;
+
+    getSelectorViewVisible : (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<boolean>;
+
+    removePoi : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String
+      ) => Promise<boolean>;
+
+    removePois : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiIDs: [String]
+      ) => Promise<[boolean]>;
+
+    getCategory : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      categoryID: String
+      ) => Promise<VMCategory>;
+
+    getPoi : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String
+      ) => VMPoi | null;
+
+    getPoiBoundingPositions : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String
+      ) => Promise<[VMPosition]>;
+
+    queryAllCategoryIDs : (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<[String]>;
+
+    queryAllPoiIDs : (
+      viewRef: React.ElementRef<NativeComponentType>
+      ) => Promise<[String]>;
+
+    queryPois : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      filter: VMPoiFilter, 
+      callback: VMPoiFilterCallback | undefined
+      ) => void;
+
+    resetPoiColor : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String
+      ) => Promise<boolean>;
+
+    setPoiSize : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String, 
+      size: VMPoiSize, 
+      animated: boolean) => Promise<boolean>;
+
+    setPoisSize : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiIDs: [String], 
+      sizes: [VMPoiSize], 
+      animated: [boolean]
+      ) => Promise<[boolean]>;
+
+    setPoiPosition : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String, 
+      position: VMPosition, 
+      animated: boolean
+      ) => Promise<boolean>;
+
+    setPoisPosition : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiIDs: [String], 
+      positions: [VMPosition], 
+      animated: [boolean]
+      ) => Promise<[boolean]>;
+
+    showPoiInfo : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      poiID: String
+      ) => void;
+
+    setCategories : (
+      viewRef: React.ElementRef<NativeComponentType>, 
+      data: String
+      ) =>Promise<[String : any]>;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
@@ -112,6 +248,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'getPoiPosition',
     'setSelectorViewVisible',
     'getVersion',//android only
+    'animateCamera',
     //'getDataSDKVersion', 
     //'getMinDataSDKVersion',
   ],

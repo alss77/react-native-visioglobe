@@ -89,12 +89,12 @@ export default function App() {
     ref.current.computeRoute(origin, destination);
   };
 
-  const getVersion = () => {
+  const getVersion = async () => {
     //console.log(ref.current.getVersion());
     let promise = ref.current.getVersion()
     promise.then((value) => {
       alert(value);
-    }); 
+    });
   }
 
   return (
