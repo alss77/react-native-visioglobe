@@ -19,7 +19,6 @@ public class VisioDataReturnedEvent extends Event<VisioDataReturnedEvent> {
       payload.putString("result", versionString);
     }
 
-
   @Override
     public String getEventName() {
       return "getVersion";

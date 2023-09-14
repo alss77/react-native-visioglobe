@@ -153,6 +153,36 @@ public class VisioFragment extends Fragment {
     Log.d("REF", "====> CUSTOM FUNCTION FROM FRAGMENT");
 
   }
+
+  public void animateCamera(){}
+  public void getCameraContext(){}
+  public void updateCamera(){}
+  public void animateScene(){}
+  public void updateScene(){}
+  public void createLocationFromLocation(){}
+  public void createPositionFromLocation(){}
+  public void getLocationTrackingMode(){}
+  public void setLocationTrackingMode(){}
+  public void getLocationTrackingButtonToggleModes(){}
+  public void setLocationTrackingButtonToggleModes(){}
+  public void getNavigationHeaderViewVisible(){}
+  public void setNavigationHeaderViewVisible(){}
+  public void getSelectorViewVisible(){}
+  public void removePoi(){}
+  public void removePois(){}
+  public void getCategory(){}
+  public void getPoi(){}
+  public void getPoiBoundingPositions(){}
+  public void queryAllCategoryIDs(){}
+  public void queryAllPoiIDs(){}
+  public void queryPois(){}
+  public void resetPoiColor(){}
+  public void setPoiSize(){}
+  public void setPoisSize(){}
+  public void setPoiPosition(){}
+  public void setPoisPosition(){}
+  public void showPoiInfo(){}
+  public void setCategories(){}
   public String getVersion(){
     Log.d("REF", "====> GET VERSION ");
     return mMapController.getDataSDKVersion();
