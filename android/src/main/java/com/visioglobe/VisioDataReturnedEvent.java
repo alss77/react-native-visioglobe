@@ -16,14 +16,13 @@ public class VisioDataReturnedEvent extends Event<VisioDataReturnedEvent> {
       super(viewId);
       payload = Arguments.createMap();
       payload.putInt("requestId", requestId);
-      // Put our annotations into the payload.
       payload.putString("result", versionString);
     }
 
 
   @Override
     public String getEventName() {
-      return EVENT_NAME;
+      return "getVersion";
     }
 
     @Override
