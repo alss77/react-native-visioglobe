@@ -100,6 +100,121 @@ class VisioMapViewManager: RCTViewManager {
             }
         }**/
     }
+    @objc func animateCamera(_ reactTag: NSNumber) {
+        print("ANIMATE CAMERA")
+    }
+
+    @objc func getCameraContext(_ reactTag: NSNumber) {
+        print("GET CAMERA CONTEXT")
+    }
+
+    @objc func updateCamera(_ reactTag: NSNumber) {
+        print("UPDATE CAMERA")
+    }
+
+    @objc func animateScene(_ reactTag: NSNumber) {
+        print("ANIMATE SCENE")
+    }
+
+    @objc func updateScene(_ reactTag: NSNumber) {
+        print("UPDATE SCENE")
+    }
+
+    @objc func createLocationFromLocation(_ reactTag: NSNumber) {
+        print("CREATE LOCATION FROM LOCATION")
+    }
+
+    @objc func createPositionFromLocation(_ reactTag: NSNumber) {
+        print("CREATE POSITION FROM LOCATION")
+    }
+
+    @objc func getLocationTrackingMode(_ reactTag: NSNumber) {
+        print("GET LOCATION TRACKING MODE")
+    }
+
+    @objc func setLocationTrackingMode(_ reactTag: NSNumber) {
+        print("SET LOCATION TRACKING MODE")
+    }
+
+    @objc func getLocationTrackingButtonToggleModes(_ reactTag: NSNumber) {
+        print("GET LOCATION TRACKING BUTTON TOGGLE MODES")
+    }
+
+    @objc func setLocationTrackingButtonToggleModes(_ reactTag: NSNumber) {
+        print("SET LOCATION TRACKING BUTTON TOGGLE MODES")
+    }
+
+    @objc func getNavigationHeaderViewVisible(_ reactTag: NSNumber) {
+        print("GET NAVIGATION HEADER VIEW VISIBLE")
+    }
+
+    @objc func setNavigationHeaderViewVisible(_ reactTag: NSNumber) {
+        print("SET NAVIGATION HEADER VIEW VISIBLE")
+    }
+
+    @objc func getSelectorViewVisible(_ reactTag: NSNumber) {
+        print("GET SELECTOR VIEW VISIBLE")
+    }
+
+    @objc func removePoi(_ reactTag: NSNumber) {
+        print("REMOVE POI")
+    }
+
+    @objc func removePois(_ reactTag: NSNumber) {
+        print("REMOVE POIS")
+    }
+
+    @objc func getCategory(_ reactTag: NSNumber) {
+        print("GET CATEGORY")
+    }
+
+    @objc func getPoi(_ reactTag: NSNumber) {
+        print("GET POI")
+    }
+
+    @objc func getPoiBoundingPositions(_ reactTag: NSNumber) {
+        print("GET POI BOUNDING POSITIONS")
+    }
+
+    @objc func queryAllCategoryIDs(_ reactTag: NSNumber) {
+        print("QUERY ALL CATEGORY IDS")
+    }
+
+    @objc func queryAllPoiIDs(_ reactTag: NSNumber) {
+        print("QUERY ALL POI IDS")
+    }
+
+    @objc func queryPois(_ reactTag: NSNumber) {
+        print("QUERY POIS")
+    }
+
+    @objc func resetPoiColor(_ reactTag: NSNumber) {
+        print("RESET POI COLOR")
+    }
+
+    @objc func setPoiSize(_ reactTag: NSNumber) {
+        print("SET POI SIZE")
+    }
+
+    @objc func setPoisSize(_ reactTag: NSNumber) {
+        print("SET POIS SIZE")
+    }
+
+    @objc func setPoiPosition(_ reactTag: NSNumber) {
+        print("SET POI POSITION")
+    }
+
+    @objc func setPoisPosition(_ reactTag: NSNumber) {
+        print("SET POIS POSITION")
+    }
+
+    @objc func showPoiInfo(_ reactTag: NSNumber) {
+        print("SHOW POI INFO")
+    }
+
+    @objc func setCategories(_ reactTag: NSNumber) {
+        print("SET CATEGORIES")
+    }
 
     
   /* override static func requiresMainQueueSetup() -> Bool {
