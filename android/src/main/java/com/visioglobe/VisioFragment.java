@@ -46,10 +46,6 @@ public class VisioFragment extends Fragment {
   private String mMapPath;
   private int mMapSecret;
 
-  private int width;
-
-  private int height;
-
   private Boolean routingEnabled = false;
 
   public VisioFragment(String hash, String path, int secret) {

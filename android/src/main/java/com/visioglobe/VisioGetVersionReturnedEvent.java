@@ -8,11 +8,11 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
-public class VisioDataReturnedEvent extends Event<VisioDataReturnedEvent> {
+public class VisioGetVersionReturnedEvent extends Event<VisioGetVersionReturnedEvent> {
     public static final String EVENT_NAME = "getVersion";
     private WritableMap payload;
 
-    public VisioDataReturnedEvent(@IdRes int viewId, int requestId, @NonNull String versionString) {
+    public VisioGetVersionReturnedEvent(@IdRes int viewId, int requestId, @NonNull String versionString) {
       super(viewId);
       payload = Arguments.createMap();
       payload.putInt("requestId", requestId);

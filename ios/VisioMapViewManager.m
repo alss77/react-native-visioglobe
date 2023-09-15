@@ -26,6 +26,36 @@ RCT_EXTERN_METHOD(computeRoute: (nonnull NSNumber *) reactTag
 RCT_EXTERN_METHOD(getVersion: (nonnull NSNumber *)reactTag
                   resolve: (RCTPromiseResolveBlock)resolve
                   rejecter: (RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(animateCamera : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getCameraContext : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(updateCamera : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(animateScene : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(updateScene : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(createLocationFromLocation : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(createPositionFromLocation : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getLocationTrackingMode : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setLocationTrackingMode : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getLocationTrackingButtonToggleModes : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setLocationTrackingButtonToggleModes : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getNavigationHeaderViewVisible : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setNavigationHeaderViewVisible : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getSelectorViewVisible : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(removePoi : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(removePois : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getCategory : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getPoi : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(getPoiBoundingPositions : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(queryAllCategoryIDs : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(queryAllPoiIDs : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(queryPois : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(resetPoiColor : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setPoiSize : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setPoisSize : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setPoiPosition : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setPoisPosition : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(showPoiInfo : (nonnull NSNumber *)reactTag);
+RCT_EXTERN_METHOD(setCategories : (nonnull NSNumber *)reactTag);
+
 RCT_EXTERN_METHOD(customFunctionToCall: () reactTag)
 @end
 

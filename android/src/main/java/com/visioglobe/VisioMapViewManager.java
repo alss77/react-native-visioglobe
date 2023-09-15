@@ -13,12 +13,9 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.NativeViewHierarchyManager;
-import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -29,7 +26,6 @@ import com.facebook.react.uimanager.events.EventDispatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
 
@@ -147,7 +143,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
   @Nullable
   @Override
   public Map getExportedCustomDirectEventTypeConstants() {
-    return MapBuilder.of(VisioDataReturnedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onDataReturned"));
+    return MapBuilder.of(VisioGetVersionReturnedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onDataReturned"));
   }
   /**
    * Handle "create" command (called from JS) and call createFragment method
@@ -217,7 +213,7 @@ public class VisioMapViewManager extends ViewGroupManager<FrameLayout> {
       case "getVersion":
         Integer requestId = args.getInt(0);
         String version = myFragment.getVersion();
-        eventDispatcher.dispatchEvent(new VisioDataReturnedEvent(reactNativeViewId, requestId, version));
+        eventDispatcher.dispatchEvent(new VisioGetVersionReturnedEvent(reactNativeViewId, requestId, version));
         break;
       case "getMinDataSDKVersion":
         myFragment.getMinDataSDKVersion();
